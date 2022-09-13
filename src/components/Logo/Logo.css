@@ -3,6 +3,7 @@
   height: 38px;
   opacity: 1;
   transition: opacity .3s ease;
+  cursor: pointer;
 }
 
 .logo:hover {
