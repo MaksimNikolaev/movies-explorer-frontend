@@ -4,6 +4,7 @@ import AboutProject from '../AboutProject/AboutProject';
 import './Main.css';
 import Stack from '../Stack/Stack';
 import Student from '../Student/Student';
+import Footer from '../Footer/Footer';
 
 const Main = () => {
   return (
@@ -13,6 +14,7 @@ const Main = () => {
         <AboutProject/>
         <Stack/>
         <Student/>
+        <Footer/>
     </div>
   );
 }
