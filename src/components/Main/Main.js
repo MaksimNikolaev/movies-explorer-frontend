@@ -3,6 +3,7 @@ import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import './Main.css';
 import Stack from '../Stack/Stack';
+import Student from '../Student/Student';
 
 const Main = () => {
   return (
@@ -11,6 +12,7 @@ const Main = () => {
         <Promo/>
         <AboutProject/>
         <Stack/>
+        <Student/>
     </div>
   );
 }
