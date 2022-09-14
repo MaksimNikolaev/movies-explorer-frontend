@@ -1,11 +1,23 @@
+@keyframes move {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .logo {
   width: 38px;
   height: 38px;
   opacity: 1;
-  transition: opacity .3s ease;
+  transform:rotate(0deg);
   cursor: pointer;
 }
 
 .logo:hover {
-  opacity: .7;
+  animation: move 1s infinite linear;
 }
