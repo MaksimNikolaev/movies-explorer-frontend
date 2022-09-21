@@ -8,3 +8,15 @@
   justify-content: space-between;
   align-items: center;
 }
+
+@media (max-width: 1023px) {
+  .header {
+    padding: 18px 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    padding: 18px 14px;
+  }
+}

@@ -25,3 +25,10 @@
 .auth__link:hover {
   opacity: .7;
 }
+
+@media (max-width: 767px) {
+  .auth__link {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+}

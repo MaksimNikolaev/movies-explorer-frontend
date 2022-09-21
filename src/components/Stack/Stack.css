@@ -68,3 +68,55 @@
   letter-spacing: -0.04em;
   color: #000000;
 }
+
+@media (max-width: 1023px) {
+  .stack {
+    padding: 90px 50px;
+  }
+  .stack__title {
+    margin-top: 80px;
+  }
+  .stack__text {
+    font-size: 12px;
+    line-height: 18px;
+    margin-top: 22px;
+  }
+  .stack__list {
+    margin-top: 83px;
+  }
+  .stack__item {
+    width: 84px;
+    height: 57px;
+  }
+  .stack__link {
+    font-size: 12px;
+    line-height: 57px;
+  }
+}
+
+@media (max-width: 767px) {
+  .stack {
+    padding: 70px 18px;
+    background-color: #fff;
+  }
+  .stack__title {
+    font-size: 30px;
+    line-height: 36px;
+    margin-top: 60px;
+  }
+  .stack__text {
+    font-size: 11px;
+    line-height: 16px;
+    margin-top: 24px;
+  }
+  .stack__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 100px);
+    gap: 10px;
+    margin-top: 50px;
+  }
+  .stack__item {
+    margin-right: 0;
+    width: 100%;
+  }
+}

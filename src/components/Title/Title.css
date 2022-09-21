@@ -15,3 +15,13 @@
   display: block;
   background-color: #000000;
 }
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .title::after {
+    margin-top: 28px;
+  }
+}
