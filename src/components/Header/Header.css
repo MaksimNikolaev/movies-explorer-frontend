@@ -1,6 +1,10 @@
 .header {
-  background-color: #073042;
+  background-color: #fff;
   padding: 18px 70px;
+}
+
+.header_bgcolor_blue {
+  background-color: #073042;
 }
 
 .header__container {
