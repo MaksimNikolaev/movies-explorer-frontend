@@ -1,0 +1,20 @@
+.more-button__container {
+  display: flex;
+  justify-content: center;
+  padding: 50px 70px 80px;
+  background-color: #fff;
+}
+
+.more-button__button {
+  background: #fff;
+  width: 320px;
+  height: 36px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #000000;
+  border: 1px solid #E8E8E8;
+  cursor: pointer;
+  border-radius: 8px;
+}

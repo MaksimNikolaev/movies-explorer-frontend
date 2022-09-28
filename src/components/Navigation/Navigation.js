@@ -14,7 +14,7 @@ const Navigation = () => {
         </li>
         <li className='navigation__item'>
           <NavLink to="/profile" className={({isActive}) =>`${isActive ? 'navigation__link navigation__link_active' : 'navigation__link'}`}>
-            <p>Аккаунт</p>
+            <p className='navigation__account'>Аккаунт</p>
             <img src={iconProfile} alt='Иконка профиля' className='navigation__icon'/>          
           </NavLink>
         </li> 

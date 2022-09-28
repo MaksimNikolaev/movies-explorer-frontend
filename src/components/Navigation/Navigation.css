@@ -11,8 +11,8 @@
 }
 
 .navigation__item:last-child {
-   margin-right: 0px;
-   margin-left: 50px;
+  margin-right: 0px;
+  margin-left: 45px;
  }
 
 .navigation__link {
@@ -34,4 +34,8 @@
   height: 30px;
   object-fit: cover;
   margin-left: 13px;
+}
+
+.navigation__account {
+  margin: 0;
 }

@@ -1,0 +1,14 @@
+.movies-card {
+  padding: 70px 70px 28px 70px;
+  background-color: #fff;
+}
+
+.movies-card__list {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 30px;
+  row-gap: 60px;
+}  
