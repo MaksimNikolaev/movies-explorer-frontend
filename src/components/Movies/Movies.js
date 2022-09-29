@@ -37,7 +37,7 @@ const Movies = () => {
     name: 'В погоне за Бенкси',
     duration: '1ч 17м',
     photo: photo3,
-    isSaved: false,
+    isSaved: true,
   },
   {
     id: 4,
