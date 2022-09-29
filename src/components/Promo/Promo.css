@@ -2,6 +2,7 @@
   padding: 75px 70px;
   display: grid;
   justify-items: start;
+  background-color: #073042;
 }
 
 .promo__title {
@@ -11,6 +12,7 @@
   line-height: 58px;
   margin: 0;
   font-weight: 400;
+  color: #FFFFFF;
 }
 
 .promo__subtitle {

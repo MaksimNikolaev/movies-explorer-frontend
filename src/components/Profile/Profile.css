@@ -1,6 +1,8 @@
 .profile {
-  padding: 74px 70px 70px;
+  padding: 74px 70px 0;
   background-color: #fff;
+  box-sizing: border-box;
+  min-height: 92vh;
 }
 
 .profile__title {
