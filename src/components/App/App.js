@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../Login/Login";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
+import NotFound from "../NotFound/NotFound";
 import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -34,6 +35,10 @@ const App = () => {
         </Route>
         <Route path="/signin" element={
                   <Login/>
+              }>
+        </Route>
+        <Route path="*" element={
+                  <NotFound/>
               }>
         </Route>
       </Routes>
