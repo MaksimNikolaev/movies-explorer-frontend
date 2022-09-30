@@ -20,6 +20,9 @@
   .header {
     padding: 18px 30px;
   }
+  .header__container {
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 767px) {
