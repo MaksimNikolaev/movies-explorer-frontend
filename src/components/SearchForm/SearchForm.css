@@ -90,6 +90,13 @@
   font-size: 12px;
   line-height: 18px;
   color: #000000;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.search__label:hover {
+  opacity: .7;
 }
 
 @media (max-width: 1023px) {
