@@ -144,3 +144,9 @@
     border-bottom: 2px solid #000000;
 }
 }
+
+@media (max-width: 767px) {
+  .navigation__slider {
+    padding: 144px 10px 48px;
+  }
+}

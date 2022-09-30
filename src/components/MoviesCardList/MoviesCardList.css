@@ -12,3 +12,21 @@
   column-gap: 30px;
   row-gap: 60px;
 }  
+
+@media (max-width: 1023px) {
+  .movies-card {
+    padding: 70px 30px 12px 30px;
+  }
+  .movies-card__list {
+    row-gap: 47px;
+  }
+}
+
+@media (max-width: 767px) {
+  .movies-card {
+    padding: 40px 10px 13px 10px;
+  }
+  .movies-card__list {
+    row-gap: 39px;
+  }
+}

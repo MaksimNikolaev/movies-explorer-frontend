@@ -91,3 +91,21 @@
   line-height: 18px;
   color: #000000;
 }
+
+@media (max-width: 1023px) {
+  .search {
+    padding: 80px 30px 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .search {
+    padding: 81px 14px 10px;
+  }
+  .search::after {
+    margin-top: 43px;
+  }
+  .search__checkbox-container {
+    margin-top: 39px;
+  }
+}

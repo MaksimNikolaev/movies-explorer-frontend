@@ -18,3 +18,12 @@
   cursor: pointer;
   border-radius: 8px;
 }
+
+@media (max-width: 767px) {
+  .more-button__container {
+    padding: 50px 40px 80px;
+  }
+  .more-button__button {
+    width: 240px;    
+  }
+}

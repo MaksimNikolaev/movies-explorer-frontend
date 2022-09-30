@@ -92,3 +92,20 @@
   cursor: pointer;
   margin-top: 16px;
 }
+
+@media (max-width: 1023px) {
+  .profile {
+    padding: 236px 70px 269px;
+  }
+  .profile__submit-edit {
+    margin-top: 210px;
+  }
+}
+@media (max-width: 767px) {
+  .profile {
+    padding: 70px 30px 40px;
+  }
+  .profile__submit-edit {
+    margin-top: 379px;
+  }
+}
