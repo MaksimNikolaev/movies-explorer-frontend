@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import Login from "../Login/Login";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import Profile from "../Profile/Profile";
@@ -29,6 +30,10 @@ const App = () => {
         </Route>
         <Route path="/signup" element={
                   <Register/>
+              }>
+        </Route>
+        <Route path="/signin" element={
+                  <Login/>
               }>
         </Route>
       </Routes>

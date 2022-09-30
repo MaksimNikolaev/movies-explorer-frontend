@@ -1,6 +1,6 @@
 import useValidationForms from '../../hooks/useValidationForms';
 import Form from "../Form/Form";
-import "./Register.css";
+import "./Login.css";
 
 const Register = () => {
   const { handleChange, errors, isValid } = useValidationForms();
@@ -8,26 +8,8 @@ const Register = () => {
 
   return (
     <div className="main">
-      <section className="register">
-        <Form id='register'  title='Добро пожаловать!' text='Уже зарегистрированы?' link='/signin' textLink='Войти'>
-          <label htmlFor="form__name" className="form__label">
-              Имя
-            </label>
-            <input
-              type="text"
-              id="form__name"
-              className={`form__input ${errors.name && "form__input_type_error"}`}
-              defaultValue="Виталий"
-              placeholder="Введите имя"
-              name="name"
-              minLength={2}
-              maxLength={40}
-              onChange={handleChange}
-              required
-            ></input>
-            <div className="form__errors">
-              <span id="name-error" className={spanErrorClassName}>{errors.name}</span>
-            </div>            
+      <section className="login">
+        <Form id='login'  title='Рады видеть!' text='Ещё не зарегистрированы?' link='/signup' textLink='Регистрация'>         
             <label htmlFor="form__email" className="form__label">
               E&#8209;mail
             </label>
@@ -60,7 +42,7 @@ const Register = () => {
               <span id="password-error" className={spanErrorClassName}>{errors.password}</span>
             </div> 
             <button type="submit" className="form__button">
-              Зарегистрироваться
+              Войти
             </button>
           </Form>          
       </section>
