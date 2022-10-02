@@ -32,14 +32,21 @@
 .search__btn {
   grid-area: 1 / 2 / 2 / 3;
   background: #3456F3;
+  width: 70px;
+  height: 44px;
   border-radius: 3px;
-  padding: 13px 5px;
   border: none;
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
   color: #FFFFFF;
   cursor: pointer;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.search__btn:hover {
+  opacity: .8;
 }
 
 .search__checkbox-container {
