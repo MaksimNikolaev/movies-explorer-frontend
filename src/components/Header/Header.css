@@ -1,5 +1,8 @@
 .header {
+  max-width: 1280px;
+  margin: 0 auto;
   padding: 18px 70px;
+  box-sizing: border-box;
 }
 
 .header_bgcolor_blue {
