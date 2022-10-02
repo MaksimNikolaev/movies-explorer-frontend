@@ -100,10 +100,13 @@
     align-self: flex-start;
   }
   .form__input {
-    align-self: flex-start;    
+    width: 100%;  
   }
   .form__button {
     align-self: stretch; 
+  }
+  .form__errors {
+    align-self: stretch;
   }  
   .form__text {
     font-size: 12px;
