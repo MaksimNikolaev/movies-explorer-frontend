@@ -1,0 +1,125 @@
+.search {
+  padding: 80px 70px 10px;
+  background-color: #fff;
+}
+
+.search::after {
+  display: block;
+  content: '';
+  height: 1px;
+  background-color: #E8E8E8;
+  margin-top: 39px;
+}
+
+.search__form {
+  display: grid;
+  grid-template-columns: 1fr 70px;
+  column-gap: 10px;
+}
+
+.search__name {
+  grid-area: 1 / 1 / 2 / 2;
+  background: #F9F9F9;
+  border-radius: 4px;
+  padding: 15px 22px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #A0A0A0;
+  border: none;
+}
+
+.search__btn {
+  grid-area: 1 / 2 / 2 / 3;
+  background: #3456F3;
+  width: 70px;
+  height: 44px;
+  border-radius: 3px;
+  border: none;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: #FFFFFF;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.search__btn:hover {
+  opacity: .8;
+}
+
+.search__checkbox-container {
+  display: flex;
+  margin-top: 30px;
+  justify-self: center;
+  grid-area: 2 / 1 / 3 / 3;  
+  cursor: pointer;
+}
+.search__checkbox-container .search__checkbox-span {
+	position: relative;	
+	display: inline-block;	
+  width: 36px;	
+	height: 20px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(50, 50, 71, 0.08), 0px 4px 8px rgba(50, 50, 71, 0.06);
+  border-radius: 16px;
+}
+.search__checkbox-container .search__checkbox-span:before {
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 2px;	
+	display: inline-block;
+	width: 16px;	
+	height: 16px;
+	border-radius: 50%;
+  background: #F5F5F5;
+	transition: .15s;
+}
+.search__checkbox-container input[type=checkbox] {
+	display: block;	
+	width: 0;
+	height: 0;	
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+}
+
+.search__checkbox-container input[type=checkbox]:checked + .search__checkbox-span:before {
+  background: limegreen;
+	transform:translateX(16px);
+}
+
+.search__label {
+  margin-left: 12px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #000000;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.search__label:hover {
+  opacity: .7;
+}
+
+@media (max-width: 1023px) {
+  .search {
+    padding: 80px 30px 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .search {
+    padding: 81px 14px 10px;
+  }
+  .search::after {
+    margin-top: 43px;
+  }
+  .search__checkbox-container {
+    margin-top: 39px;
+  }
+}

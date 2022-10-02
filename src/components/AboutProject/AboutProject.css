@@ -1,0 +1,142 @@
+.about-project {
+  background-color: #fff;
+  padding: 110px 70px;
+}
+
+.about-project__stage {
+  display: flex;
+  margin: 0;
+  margin-top: 70px;
+  padding: 0;
+}
+
+.about-project__list {
+  list-style: none;
+  margin-left: 20px;
+}
+
+.about-project__list:first-child {
+  margin-left: 0;
+}
+
+.about-project__duration .about-project__list {
+  margin-left: 0;
+}
+
+.about-project__subtitle {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  color: #000000;
+  margin: 0;
+}
+
+.about-project__text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+  margin: 0;
+  margin-top: 26px;
+}
+
+.about-project__duration {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  margin-top: 110px;
+}
+
+.about-project__weeks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  margin: 0;
+  height: 36px;
+}
+
+.about-project__course {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #A0A0A0;
+  margin: 0;
+  margin-top: 14px;
+}
+
+.about-project__weeks_bgcolor-green {
+  background-color: #2BE080;
+}
+
+.about-project__weeks_bgcolor-grey {
+  background-color: #F2F2F2;
+}
+
+@media (max-width: 1023px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+  .about-project__text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-project__duration {
+    margin-top: 93px;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-project {
+    padding: 70px 18px;
+  }
+  .about-project__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .about-project__text {
+    font-size: 11px;
+    line-height: 16px;
+    margin-top: 16px;
+  }
+  .about-project__duration {
+    grid-template-columns: 1fr 3fr;
+  }
+  .about-project__weeks {
+    font-size: 11px;
+    line-height: 13px;
+    height: 35px;
+  }
+  .about-project__course {
+    font-size: 11px;
+    line-height: 13px;
+    margin-top: 10px;
+  }
+  .about-project__stage {
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 320px) {
+  .about-project__stage {
+    flex-direction: column;
+  }
+  .about-project__list {
+    margin-bottom: 56px;
+    margin-left: 0;
+  }
+  .about-project__list:last-child {
+    margin-bottom: 0;
+  }
+  .about-project__duration {
+    margin-top: 60px;
+    grid-template-columns: 1fr 2fr;
+  }
+}

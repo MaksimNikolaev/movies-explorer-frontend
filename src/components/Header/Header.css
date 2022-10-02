@@ -1,0 +1,35 @@
+.header {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 70px;
+  box-sizing: border-box;
+}
+
+.header_bgcolor_blue {
+  background-color: #073042;
+}
+
+.header_bgcolor_white {
+  background-color: #fff;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 1023px) {
+  .header {
+    padding: 18px 30px;
+  }
+  .header__container {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    padding: 18px 14px;
+  }
+}
