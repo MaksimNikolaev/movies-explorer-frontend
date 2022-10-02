@@ -12,6 +12,15 @@
 
 .about-project__list {
   list-style: none;
+  margin-left: 20px;
+}
+
+.about-project__list:first-child {
+  margin-left: 0;
+}
+
+.about-project__duration .about-project__list {
+  margin-left: 0;
 }
 
 .about-project__subtitle {
