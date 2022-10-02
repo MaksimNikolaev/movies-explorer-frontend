@@ -130,6 +130,7 @@
   }
   .about-project__list {
     margin-bottom: 56px;
+    margin-left: 0;
   }
   .about-project__list:last-child {
     margin-bottom: 0;
