@@ -20,6 +20,20 @@ const Movies = () => {
     handleChangeWidthScreen();
   }, []);
 
+  useEffect(() => {
+    let timer;
+    const handleChangeMoviesSettingsWithTimeout = () => {
+        timer = setTimeout(handleChangeWidthScreen, 1000);
+    }
+    window.addEventListener('resize', handleChangeMoviesSettingsWithTimeout);
+
+    return () => {
+        window.removeEventListener('resize', handleChangeMoviesSettingsWithTimeout);
+        clearTimeout(timer);
+    }
+});
+
+
   const handleChangeWidthScreen = () => {
     if (window.innerWidth < 768) {
       setMoviesDisplay({ initilalQuantity: 5, inc: 2 });
