@@ -14,6 +14,7 @@ const Movies = () => {
     inc: 0,
   });
   const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     handleChangeWidthScreen();
@@ -31,6 +32,7 @@ const Movies = () => {
   };
 
   const handleSearchSubmit = (inputSearch) => {
+    setIsLoading(true);
     moviesApi
       .getMovies()
       .then((res) => {
@@ -41,6 +43,9 @@ const Movies = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -62,7 +67,7 @@ const Movies = () => {
       <Header isBlue={false} isLoggedIn={true} />
       <main className="main">
         <SearchForm handleSearchSubmit={handleSearchSubmit} />
-        <MoviesCardList moviesArray={moviesArray} countMoviesOfScreens={countMoviesOfScreens}/>
+        <MoviesCardList moviesArray={moviesArray} countMoviesOfScreens={countMoviesOfScreens} isLoading={isLoading}/>
         <MoreButton moviesArray={moviesArray} handleMoreSubmit={loadMore} countMoviesOfScreens={countMoviesOfScreens} />
       </main>
       <Footer />
