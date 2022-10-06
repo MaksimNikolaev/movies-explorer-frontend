@@ -22,17 +22,15 @@ const Movies = () => {
 
   useEffect(() => {
     let timer;
-    const handleChangeMoviesSettingsWithTimeout = () => {
-        timer = setTimeout(handleChangeWidthScreen, 1000);
-    }
-    window.addEventListener('resize', handleChangeMoviesSettingsWithTimeout);
-
+    const handleChangeWidthScreenTimer = () => {
+      timer = setTimeout(handleChangeWidthScreen, 1000);
+    };
+    window.addEventListener("resize", handleChangeWidthScreenTimer);
     return () => {
-        window.removeEventListener('resize', handleChangeMoviesSettingsWithTimeout);
-        clearTimeout(timer);
-    }
-});
-
+      window.removeEventListener("resize", handleChangeWidthScreenTimer);
+      clearTimeout(timer);
+    };
+  });
 
   const handleChangeWidthScreen = () => {
     if (window.innerWidth < 768) {
@@ -42,7 +40,7 @@ const Movies = () => {
     } else {
       setMoviesDisplay({ initilalQuantity: 12, inc: 3 });
     }
-    setCountMoviesOfScreens(moviesDisplay.initilalQuantity)
+    setCountMoviesOfScreens(moviesDisplay.initilalQuantity);
   };
 
   const handleSearchSubmit = (inputSearch) => {
@@ -73,7 +71,7 @@ const Movies = () => {
   };
 
   const loadMore = () => {
-    setCountMoviesOfScreens(countMoviesOfScreens+moviesDisplay.inc)
+    setCountMoviesOfScreens(countMoviesOfScreens + moviesDisplay.inc);
   };
 
   return (
@@ -81,8 +79,16 @@ const Movies = () => {
       <Header isBlue={false} isLoggedIn={true} />
       <main className="main">
         <SearchForm handleSearchSubmit={handleSearchSubmit} />
-        <MoviesCardList moviesArray={moviesArray} countMoviesOfScreens={countMoviesOfScreens} isLoading={isLoading}/>
-        <MoreButton moviesArray={moviesArray} handleMoreSubmit={loadMore} countMoviesOfScreens={countMoviesOfScreens} />
+        <MoviesCardList
+          moviesArray={moviesArray}
+          countMoviesOfScreens={countMoviesOfScreens}
+          isLoading={isLoading}
+        />
+        <MoreButton
+          moviesArray={moviesArray}
+          handleMoreSubmit={loadMore}
+          countMoviesOfScreens={countMoviesOfScreens}
+        />
       </main>
       <Footer />
     </>
