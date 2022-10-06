@@ -3,114 +3,67 @@ import Header from "../Header/Header";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
-import photo1 from "../../images/MoviesCard/33slova.jpg";
-import photo2 from "../../images/MoviesCard/100let.jpg";
-import photo3 from "../../images/MoviesCard/vpogone.jpg";
-import photo4 from "../../images/MoviesCard/baskiya.jpg";
-import photo5 from "../../images/MoviesCard/beg.jpg";
-import photo6 from "../../images/MoviesCard/knigotvorci.jpg";
-import photo7 from "../../images/MoviesCard/kogdayadumau.jpg";
-import photo8 from "../../images/MoviesCard/gimme.jpg";
-import photo9 from "../../images/MoviesCard/jenis.jpg";
-import photo10 from "../../images/MoviesCard/soberis.jpg";
-import photo11 from "../../images/MoviesCard/pi.jpg";
-import photo12 from "../../images/MoviesCard/po_volnam.jpg";
 import MoreButton from "../MoreButton/MoreButton";
+import moviesApi from "../../utils/MoviesApi";
+import { useEffect, useState } from "react";
 
 const Movies = () => {
-  const moviesArray = [
-    {
-      id: 1,
-      name: "33 слова о дизайне",
-      duration: "1ч 17м",
-      photo: photo1,
-      isSaved: false,
-    },
-    {
-      id: 2,
-      name: "Киноальманах «100 лет дизайна»",
-      duration: "1ч 17м",
-      photo: photo2,
-      isSaved: true,
-    },
-    {
-      id: 3,
-      name: "В погоне за Бенкси",
-      duration: "1ч 17м",
-      photo: photo3,
-      isSaved: true,
-    },
-    {
-      id: 4,
-      name: "Баския: Взрыв реальности",
-      duration: "1ч 17м",
-      photo: photo4,
-      isSaved: false,
-    },
-    {
-      id: 5,
-      name: "Бег это свобода",
-      duration: "1ч 17м",
-      photo: photo5,
-      isSaved: false,
-    },
-    {
-      id: 6,
-      name: "Книготорговцы",
-      duration: "1ч 17м",
-      photo: photo6,
-      isSaved: true,
-    },
-    {
-      id: 7,
-      name: "Когда я думаю о Германии ночью",
-      duration: "1ч 17м",
-      photo: photo7,
-      isSaved: false,
-    },
-    {
-      id: 8,
-      name: "Gimme Danger: История Игги и The Stooges",
-      duration: "1ч 17м",
-      photo: photo8,
-      isSaved: false,
-    },
-    {
-      id: 9,
-      name: "Дженис: Маленькая девочка грустит",
-      duration: "1ч 17м",
-      photo: photo9,
-      isSaved: false,
-    },
-    {
-      id: 10,
-      name: "Соберись перед прыжком",
-      duration: "1ч 17м",
-      photo: photo10,
-      isSaved: false,
-    },
-    {
-      id: 11,
-      name: "Пи Джей Харви: A dog called money",
-      duration: "1ч 17м",
-      photo: photo11,
-      isSaved: false,
-    },
-    {
-      id: 12,
-      name: "По волнам: Искусство звука в кино",
-      duration: "1ч 17м",
-      photo: photo12,
-      isSaved: false,
-    },
-  ];
+  const [moviesArray, setMoviesArray] = useState([]);
+  const [moviesDisplay, setMoviesDisplay] = useState({
+    initilalQuantity: 0,
+    inc: 0,
+  });
+  const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
+
+  useEffect(() => {
+    handleChangeWidthScreen();
+  }, []);
+
+  const handleChangeWidthScreen = () => {
+    if (window.innerWidth < 768) {
+      setMoviesDisplay({ initilalQuantity: 5, inc: 2 });
+    } else if (window.innerWidth < 1280) {
+      setMoviesDisplay({ initilalQuantity: 8, inc: 2 });
+    } else {
+      setMoviesDisplay({ initilalQuantity: 12, inc: 3 });
+    }
+    setCountMoviesOfScreens(moviesDisplay.initilalQuantity)
+  };
+
+  const handleSearchSubmit = (inputSearch) => {
+    moviesApi
+      .getMovies()
+      .then((res) => {
+        handleChangeWidthScreen();
+        const filterData = filterMovies(res, inputSearch);
+        localStorage.setItem("movies", JSON.stringify(filterData));
+        setMoviesArray(filterData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const filterMovies = (data, inputSearch) => {
+    return data.filter((movie) => {
+      return (
+        movie.nameEN.toLowerCase().includes(inputSearch.toLowerCase()) ||
+        movie.nameRU.toLowerCase().includes(inputSearch.toLowerCase())
+      );
+    });
+  };
+
+  const loadMore = () => {
+    setCountMoviesOfScreens(countMoviesOfScreens+moviesDisplay.inc)
+  };
+
   return (
     <>
       <Header isBlue={false} isLoggedIn={true} />
       <main className="main">
-        <SearchForm />
-        <MoviesCardList moviesArray={moviesArray} />
-        <MoreButton moviesArray={moviesArray} />
+        <SearchForm handleSearchSubmit={handleSearchSubmit} />
+        <MoviesCardList moviesArray={moviesArray} countMoviesOfScreens={countMoviesOfScreens}/>
+        <MoreButton moviesArray={moviesArray} handleMoreSubmit={loadMore} countMoviesOfScreens={countMoviesOfScreens} />
       </main>
       <Footer />
     </>
