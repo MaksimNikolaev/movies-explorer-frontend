@@ -2,14 +2,21 @@ import useValidationForms from '../../hooks/useValidationForms';
 import Form from "../Form/Form";
 import "./Login.css";
 
-const Register = () => {
-  const { handleChange, errors, isValid } = useValidationForms();
+const Login = ({handleLogin}) => {
+  const { values, handleChange, errors, isValid } = useValidationForms();
   const spanErrorClassName = `${!isValid && "form__input-error"}`;
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let { email, password } = values;
+    handleLogin(email, password);
+  }
 
   return (
     <div className="main">
       <section className="login">
-        <Form id='login'  title='Рады видеть!' text='Ещё не зарегистрированы?' link='/signup' textLink='Регистрация'>         
+        <Form id='login'  title='Рады видеть!' text='Ещё не зарегистрированы?' link='/signup' textLink='Регистрация' onSubmit={handleSubmit}>         
             <label htmlFor="form__email" className="form__label">
               E&#8209;mail
             </label>
@@ -17,7 +24,6 @@ const Register = () => {
               type="email"
               id="form__email"
               className={`form__input ${errors.email && "form__input_type_error"}`}
-              defaultValue="pochta@yandex.ru"
               placeholder="Введите почту"
               name="email"
               onChange={handleChange}
@@ -41,7 +47,7 @@ const Register = () => {
             <div className="form__errors">
               <span id="password-error" className={spanErrorClassName}>{errors.password}</span>
             </div> 
-            <button type="submit" className="form__button">
+            <button type="submit" className="form__button" disabled={!isValid}>
               Войти
             </button>
           </Form>          
@@ -50,4 +56,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

@@ -2,7 +2,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
 
-const MoviesCardList = ({ moviesArray, countMoviesOfScreens, isLoading }) => {
+const MoviesCardList = ({ moviesArray, countMoviesOfScreens, isLoading, handleSavesMovies }) => {
   return (
     <section className="movies-card">
       {isLoading ? (
@@ -22,7 +22,8 @@ const MoviesCardList = ({ moviesArray, countMoviesOfScreens, isLoading }) => {
                 alt={item.nameRU}
                 name={item.nameRU}
                 duration={getTimeFromMins(item.duration)}
-                isSaved={item.isSaved}
+                isSaved={false}
+                handleSavesMovies={handleSavesMovies}
               />
             );
           })}

@@ -6,6 +6,7 @@ import "./Movies.css";
 import MoreButton from "../MoreButton/MoreButton";
 import moviesApi from "../../utils/MoviesApi";
 import { useEffect, useState } from "react";
+import mainApi from "../../utils/MainApi";
 
 const Movies = () => {
   const [moviesArray, setMoviesArray] = useState([]);
@@ -74,6 +75,10 @@ const Movies = () => {
     setCountMoviesOfScreens(countMoviesOfScreens + moviesDisplay.inc);
   };
 
+  const handleSavesMovies = () => {
+    mainApi.createMovies();
+  }
+
   return (
     <>
       <Header isBlue={false} isLoggedIn={true} />
@@ -83,6 +88,7 @@ const Movies = () => {
           moviesArray={moviesArray}
           countMoviesOfScreens={countMoviesOfScreens}
           isLoading={isLoading}
+          handleSavesMovies={handleSavesMovies}
         />
         <MoreButton
           moviesArray={moviesArray}

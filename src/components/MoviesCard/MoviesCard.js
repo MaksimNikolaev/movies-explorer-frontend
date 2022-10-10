@@ -1,6 +1,6 @@
 import './MoviesCard.css'
 
-const MoviesCard = ({img, alt, name, duration, isSaved}) => {
+const MoviesCard = ({img, alt, name, duration, isSaved, handleSavesMovies}) => {
   return (
     <li className="movies-card__item">
       <img src={img} className='movies-card__img' alt={alt} />
@@ -8,7 +8,7 @@ const MoviesCard = ({img, alt, name, duration, isSaved}) => {
         <h2 className='movies-card__name'>{name}</h2>
         <p className='movies-card__duration'>{duration}</p>
       </div>
-      <button className={`movies-card__btn ${isSaved ? 'movies-card__btn_type_active' : 'movies-card__btn_type_inactive'}`} type='button'>Сохранить</button>
+      <button className={`movies-card__btn ${isSaved ? 'movies-card__btn_type_active' : 'movies-card__btn_type_inactive'}`} type='button' onClick={handleSavesMovies}>Сохранить</button>
     </li>
   )
 }
