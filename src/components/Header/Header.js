@@ -11,7 +11,7 @@ const Header = ({isBlue, loggedIn, textColorBlack}) => {
         <Logo />
         {loggedIn 
           ? 
-          <Navigation textColorBlack={textColorBlack} /> 
+          <Navigation isBlue={isBlue} textColorBlack={textColorBlack} /> 
           : 
           <Auth />}
       </div>

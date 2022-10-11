@@ -32,7 +32,7 @@ const SavedMovies = ({loggedIn}) => {
   ];
   return (
     <>
-      <Header isBlue={false} loggedIn={loggedIn} />
+      <Header isBlue={false} loggedIn={loggedIn} textColorBlack={true}/>
       <main className="main">
         <SearchForm />
         <MoviesCardList moviesArray={moviesArray} />

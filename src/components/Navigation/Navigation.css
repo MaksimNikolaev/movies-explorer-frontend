@@ -71,6 +71,10 @@
 	background-color: #222222;
 	transition: all 0.5s;
 }
+
+.navigation__span_color_white {
+  background-color: #fff;
+}
 .navigation__span:nth-of-type(2) {
 	top: 7px;
 }
@@ -109,6 +113,7 @@
   .navigation__span_active {
     transform: rotate(45deg);
     top: calc(50% - 7px);
+    background-color: #222222;
   }
   .navigation__span_active:nth-of-type(2) {
     display: none;
@@ -116,6 +121,7 @@
   .navigation__span_active:nth-of-type(3) {
     transform: rotate(-45deg);
     top: calc(50% - 7px);
+    background-color: #222222;
   }
   .navigation__slider {
     box-sizing: border-box;

@@ -3,10 +3,11 @@ import iconProfile from "../../images/icons/profile.svg";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const Navigation = ({textColorBlack}) => {
+const Navigation = ({isBlue, textColorBlack}) => {
   const [showMenu, setShowMenu] = useState(false);
   const handleToggleMenu = () => setShowMenu(!showMenu);
   let textBlack = `${textColorBlack ? 'navigation__link_color_black' : 'navigation__link_color_white'}` 
+  const colorBurgerBtn = `${isBlue ? 'navigation__span_color_white' : ''}`
   const [textColorBurger, setTextColorBurger] = useState(textBlack);
 
   useEffect(() => {
@@ -42,17 +43,17 @@ const Navigation = ({textColorBlack}) => {
         onClick={handleToggleMenu}
       >
         <span
-          className={`navigation__span ${
+          className={`navigation__span ${colorBurgerBtn} ${
             showMenu ? "navigation__span_active" : ""
           }`}
         ></span>
         <span
-          className={`navigation__span ${
+          className={`navigation__span ${colorBurgerBtn} ${
             showMenu ? "navigation__span_active" : ""
           }`}
         ></span>
         <span
-          className={`navigation__span ${
+          className={`navigation__span ${colorBurgerBtn} ${
             showMenu ? "navigation__span_active" : ""
           }`}
         ></span>
