@@ -93,7 +93,24 @@ const App = () => {
   const closeInfoTooltip = () => {
     setInfoTooltipOpen(false);
   };
-  
+
+  const handleUpdateProfile = (name, email) => {
+    mainApi.updateProfile(name, email).then((res) => {
+      setCurrentUser(res);
+      setInfoTooltipOpen(true);
+      setMessage("Данные успешно обновлены.");
+    })
+    .catch((err) => {
+      if (err === "Ошибка: 409") {
+        setInfoTooltipOpen(true);
+        setMessage("Пользователь с таким email уже существует.");
+      } else {
+        setInfoTooltipOpen(true);
+        setMessage("При обновлении профиля произошла ошибка.");
+      }
+    });
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
@@ -118,7 +135,10 @@ const App = () => {
             path="/profile"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <Profile handleLogOut={handleLogOut} />
+                <Profile
+                  handleLogOut={handleLogOut}
+                  handleUpdateProfile={handleUpdateProfile}
+                />
               </ProtectedRoute>
             }
           ></Route>

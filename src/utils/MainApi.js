@@ -52,12 +52,23 @@ class MainApi {
     })
     .then(this._errorHandler)
   }
+
+  updateProfile(name, email) {
+    return fetch(`${this._url}users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        email,
+      }),
+    }).then(this._errorHandler);
+  }
 }
 
 const mainApi = new MainApi({
   url: "https://api.films.nomoredomains.sbs/",
   headers: {
-    //authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "content-type": "application/json",
   },
 });
