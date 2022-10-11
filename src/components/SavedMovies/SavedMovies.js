@@ -6,7 +6,7 @@ import photo2 from "../../images/MoviesCard/100let.jpg";
 import photo3 from "../../images/MoviesCard/vpogone.jpg";
 import photo6 from "../../images/MoviesCard/knigotvorci.jpg";
 
-const SavedMovies = () => {
+const SavedMovies = ({loggedIn}) => {
   const moviesArray = [
     {
       id: 2,
@@ -32,7 +32,7 @@ const SavedMovies = () => {
   ];
   return (
     <>
-      <Header isBlue={false} isLoggedIn={true} />
+      <Header isBlue={false} loggedIn={loggedIn} />
       <main className="main">
         <SearchForm />
         <MoviesCardList moviesArray={moviesArray} />

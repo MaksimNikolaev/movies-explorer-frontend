@@ -8,7 +8,7 @@ import moviesApi from "../../utils/MoviesApi";
 import { useEffect, useState } from "react";
 import mainApi from "../../utils/MainApi";
 
-const Movies = () => {
+const Movies = ({loggedIn}) => {
   const [moviesArray, setMoviesArray] = useState([]);
   const [moviesDisplay, setMoviesDisplay] = useState({
     initilalQuantity: 0,
@@ -81,7 +81,7 @@ const Movies = () => {
 
   return (
     <>
-      <Header isBlue={false} isLoggedIn={true} />
+      <Header isBlue={false} loggedIn={loggedIn} />
       <main className="main">
         <SearchForm handleSearchSubmit={handleSearchSubmit} />
         <MoviesCardList

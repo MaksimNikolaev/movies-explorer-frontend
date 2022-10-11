@@ -119,7 +119,7 @@ const App = () => {
             path="/movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <Movies />
+                <Movies loggedIn={loggedIn}/>
               </ProtectedRoute>
             }
           ></Route>
@@ -127,7 +127,7 @@ const App = () => {
             path="/saved-movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <SavedMovies />
+                <SavedMovies loggedIn={loggedIn}/>
               </ProtectedRoute>
             }
           ></Route>
@@ -138,6 +138,7 @@ const App = () => {
                 <Profile
                   handleLogOut={handleLogOut}
                   handleUpdateProfile={handleUpdateProfile}
+                  loggedIn={loggedIn}
                 />
               </ProtectedRoute>
             }
@@ -145,15 +146,15 @@ const App = () => {
           <Route
             path="/signup"
             element={
-              <Register handleRegister={handleRegister} message={message} />
+              <Register handleRegister={handleRegister} message={message} loggedIn={loggedIn}/>
             }
           ></Route>
           <Route
             path="/signin"
-            element={<Login handleLogin={handleLogin} />}
+            element={<Login handleLogin={handleLogin} loggedIn={loggedIn}/>}
           ></Route>
           <Route path="*" element={<NotFound />}></Route>
-          <Route path="/" element={<Main />}></Route>
+          <Route path="/" element={<Main loggedIn={loggedIn}/>}></Route>
         </Routes>
         <InfoTooltip
           isOpen={infoTooltipOpen}

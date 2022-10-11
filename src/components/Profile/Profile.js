@@ -4,7 +4,7 @@ import useValidationForms from "../../hooks/useValidationForms";
 import Header from "../Header/Header";
 import "./Profile.css";
 
-const Profile = ({ handleLogOut, handleUpdateProfile }) => {
+const Profile = ({ handleLogOut, handleUpdateProfile, loggedIn }) => {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, isValid, setValues, setIsValid } = useValidationForms();
   const [isEditProfile, setEditProfile] = useState(false);
@@ -36,7 +36,7 @@ const Profile = ({ handleLogOut, handleUpdateProfile }) => {
 
   return (
     <div className="main">
-      <Header isBlue={false} isLoggedIn={true} />
+      <Header isBlue={false} loggedIn={loggedIn} />
       <section className="profile">
         <h1 className="profile__title">Привет, {currentUser.name}</h1>
         {isEditProfile ? (

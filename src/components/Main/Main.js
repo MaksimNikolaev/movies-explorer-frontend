@@ -6,10 +6,10 @@ import Stack from "../Stack/Stack";
 import Student from "../Student/Student";
 import Footer from "../Footer/Footer";
 
-const Main = () => {
+const Main = ({loggedIn}) => {
   return (
     <>
-      <Header isBlue={true} isLoggedIn={false} />
+      <Header isBlue={true} loggedIn={loggedIn} />
       <main className="main">
         <Promo />
         <AboutProject />
