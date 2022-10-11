@@ -28,6 +28,13 @@
   color: #000000;
 }
 
+.navigation__link_color_white {
+  color: #fff;
+}
+
+.navigation__link_color_black {
+  color: #000000;
+}
 .navigation__link_active {
   font-weight: 500;
 }

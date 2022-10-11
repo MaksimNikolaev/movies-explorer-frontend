@@ -3,7 +3,7 @@ import Auth from '../Auth/Auth';
 import Navigation from '../Navigation/Navigation'
 import './Header.css';
 
-const Header = ({isBlue, loggedIn}) => {
+const Header = ({isBlue, loggedIn, textColorBlack}) => {
   const isBgColorBlue = (`header ${isBlue ? 'header_bgcolor_blue' : 'header_bgcolor_white'}` );
   return (
     <header className={isBgColorBlue}>
@@ -11,7 +11,7 @@ const Header = ({isBlue, loggedIn}) => {
         <Logo />
         {loggedIn 
           ? 
-          <Navigation /> 
+          <Navigation textColorBlack={textColorBlack} /> 
           : 
           <Auth />}
       </div>

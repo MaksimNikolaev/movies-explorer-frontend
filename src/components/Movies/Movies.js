@@ -81,7 +81,7 @@ const Movies = ({loggedIn}) => {
 
   return (
     <>
-      <Header isBlue={false} loggedIn={loggedIn} />
+      <Header isBlue={false} loggedIn={loggedIn} textColorBlack={true}/>
       <main className="main">
         <SearchForm handleSearchSubmit={handleSearchSubmit} />
         <MoviesCardList
