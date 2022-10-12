@@ -24,7 +24,7 @@ const MoviesCardList = ({ moviesArray, countMoviesOfScreens, isLoading, handleSa
     return (
       <section className="movies-card">
           <ul className="movies-card__list">
-            {moviesArray.slice(0, countMoviesOfScreens).map((item) => {
+            {moviesArray.slice(0, countMoviesOfScreens).map((item, i) => {
               function getTimeFromMins(mins) {
                 let hours = Math.trunc(mins / 60);
                 let minutes = mins % 60;
@@ -32,10 +32,8 @@ const MoviesCardList = ({ moviesArray, countMoviesOfScreens, isLoading, handleSa
               }
               return (
                 <MoviesCard
-                  key={item.id}
-                  img={`https://api.nomoreparties.co/` + item.image.url}
-                  alt={item.nameRU}
-                  name={item.nameRU}
+                  key={i}
+                  movie={item}
                   duration={getTimeFromMins(item.duration)}
                   isSaved={false}
                   handleSavesMovies={handleSavesMovies}

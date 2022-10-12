@@ -8,7 +8,7 @@ import moviesApi from "../../utils/MoviesApi";
 import { useEffect, useState } from "react";
 import mainApi from "../../utils/MainApi";
 
-const Movies = ({ loggedIn }) => {
+const Movies = ({ loggedIn, handleSavesMovies}) => {
   const [moviesArray, setMoviesArray] = useState([]);
   const [moviesDisplay, setMoviesDisplay] = useState({});
   const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
@@ -96,10 +96,6 @@ const Movies = ({ loggedIn }) => {
 
   const loadMore = () => {
     setCountMoviesOfScreens(countMoviesOfScreens + moviesDisplay.inc);
-  };
-
-  const handleSavesMovies = () => {
-    mainApi.createMovies();
   };
 
   const handleChangeCheckbox = () => {

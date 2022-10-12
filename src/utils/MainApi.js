@@ -12,11 +12,23 @@ class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  createMovies(data) {
+  createMovies(movies) {
     return fetch(`${this._url}movies`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+          country: movies.country,
+          director: movies.director,
+          duration: movies.duration,
+          year: movies.year,
+          description: movies.description,
+          image: 'https://api.nomoreparties.co' + movies.image.url,
+          trailerLink: movies.trailerLink,
+          thumbnail: 'https://api.nomoreparties.co' + movies.image.formats.thumbnail.url,
+          movieId: movies.id,
+          nameRU: movies.nameRU,
+          nameEN: movies.nameEN,
+      }),
     }).then(this._errorHandler);
   }
 
@@ -63,6 +75,19 @@ class MainApi {
       }),
     }).then(this._errorHandler);
   }
+
+  getSaveMovies (token) {
+    return fetch(`${this._url}movies`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization" : `Bearer ${token}`
+      }   
+    })
+    .then(this._errorHandler)
+  }
+
 }
 
 const mainApi = new MainApi({

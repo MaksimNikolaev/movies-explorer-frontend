@@ -19,10 +19,24 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("jwt"));
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
+  const [moviesSaveArray, setMoviesSaveArray] = useState([]);
+  const [dataReceived, setDataReceived] = useState(false);
 
   useEffect(() => {
     checkToken();
   }, [loggedIn]);
+
+  useEffect(() => {
+    mainApi
+      .getSaveMovies(localStorage.getItem("jwt"))
+      .then((res) => {
+        setMoviesSaveArray(res);
+        setDataReceived(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, []);
 
   const handleRegister = (name, email, password) => {
     mainApi
@@ -111,6 +125,17 @@ const App = () => {
     });
   };
 
+  const handleSavesMovies = (movie) => {
+    mainApi.createMovies(movie)
+    .then((movie) => {
+      console.log(movie);
+    setMoviesSaveArray([movie, ...moviesSaveArray]);    
+  })
+  .catch((err) => {
+      console.log(err);
+  });
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
@@ -119,7 +144,7 @@ const App = () => {
             path="/movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <Movies loggedIn={loggedIn}/>
+                <Movies loggedIn={loggedIn} handleSavesMovies={handleSavesMovies}/>
               </ProtectedRoute>
             }
           ></Route>
@@ -127,7 +152,7 @@ const App = () => {
             path="/saved-movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <SavedMovies loggedIn={loggedIn}/>
+                <SavedMovies loggedIn={loggedIn} handleSavesMovies={handleSavesMovies} moviesSaveArray={moviesSaveArray} dataReceived={dataReceived}/>
               </ProtectedRoute>
             }
           ></Route>
