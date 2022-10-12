@@ -27,6 +27,10 @@ const App = () => {
   }, [loggedIn]);
 
   useEffect(() => {
+    getSaveMovies();
+  }, []);
+
+  const getSaveMovies = () => {
     mainApi
       .getSaveMovies(localStorage.getItem("jwt"))
       .then((res) => {
@@ -36,7 +40,7 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       })
-  }, []);
+  }
 
   const handleRegister = (name, email, password) => {
     mainApi
@@ -126,9 +130,14 @@ const App = () => {
   };
 
   const handleSavesMovies = (movie) => {
+    const reg = movie.trailerLink.match(/^https?:\/\/(w{3}\.)?[a-z\d]+\.[\w\-._~:/?#[\]@!$&'()*+,;=]{2,}#?$/i);
+    if (!reg) {
+      movie.trailerLink = 'https://null.ru';
+    }
     mainApi.createMovies(movie)
     .then((movie) => {
     setMoviesSaveArray([movie, ...moviesSaveArray]); 
+    localStorage.setItem("saveMovies", JSON.stringify(moviesSaveArray));
   })
   .catch((err) => {
       console.log(err);
@@ -136,14 +145,33 @@ const App = () => {
   };
 
   const handleDeleteMovies = (movie) => {
-    mainApi
-    .removeMovies(movie._id)
-    .then(() => {
-      setMoviesSaveArray((state) => state.filter((item) => item._id !== movie._id));
-    })
-    .catch((err) => {
-      console.log(`Ошибка: ${err}`);
-    });
+    let savedMovieForRemove;
+    moviesSaveArray.forEach((savedMovie) => {
+      if (savedMovie.movieId === movie.id) {
+        savedMovieForRemove = savedMovie;
+        mainApi
+          .removeMovies(savedMovieForRemove._id)
+          .then(() => {
+            const newArray = JSON.parse(localStorage.getItem("saveMovies")).filter((savedMovie) => savedMovie._id !== movie.id);
+            setMoviesSaveArray(newArray);
+            localStorage.getItem("saveMovies", moviesSaveArray);
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+          });
+      } else {
+        mainApi
+      .removeMovies(movie._id)
+      .then(() => {
+        setMoviesSaveArray((state) =>
+          state.filter((item) => item._id !== movie._id)
+        );
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+      }
+    })      
   };
 
   return (
