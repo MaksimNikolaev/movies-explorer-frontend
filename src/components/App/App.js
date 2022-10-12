@@ -129,12 +129,17 @@ const App = () => {
     mainApi.createMovies(movie)
     .then((movie) => {
       console.log(movie);
-    setMoviesSaveArray([movie, ...moviesSaveArray]);    
+    setMoviesSaveArray([movie, ...moviesSaveArray]); 
   })
   .catch((err) => {
       console.log(err);
   });
   };
+
+  const handleDeleteMovies = (movie) => {
+    
+  };
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -144,7 +149,7 @@ const App = () => {
             path="/movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <Movies loggedIn={loggedIn} handleSavesMovies={handleSavesMovies}/>
+                <Movies loggedIn={loggedIn} handleSavesMovies={handleSavesMovies} moviesSaveArray={moviesSaveArray}/>
               </ProtectedRoute>
             }
           ></Route>
@@ -152,7 +157,7 @@ const App = () => {
             path="/saved-movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <SavedMovies loggedIn={loggedIn} handleSavesMovies={handleSavesMovies} moviesSaveArray={moviesSaveArray} dataReceived={dataReceived}/>
+                <SavedMovies loggedIn={loggedIn}  moviesSaveArray={moviesSaveArray} dataReceived={dataReceived} />
               </ProtectedRoute>
             }
           ></Route>

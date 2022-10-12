@@ -6,9 +6,8 @@ import "./Movies.css";
 import MoreButton from "../MoreButton/MoreButton";
 import moviesApi from "../../utils/MoviesApi";
 import { useEffect, useState } from "react";
-import mainApi from "../../utils/MainApi";
 
-const Movies = ({ loggedIn, handleSavesMovies}) => {
+const Movies = ({ loggedIn, handleSavesMovies, moviesSaveArray}) => {
   const [moviesArray, setMoviesArray] = useState([]);
   const [moviesDisplay, setMoviesDisplay] = useState({});
   const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
@@ -117,6 +116,7 @@ const Movies = ({ loggedIn, handleSavesMovies}) => {
           isLoading={isLoading}
           handleSavesMovies={handleSavesMovies}
           dataReceived={dataReceived}
+          moviesSaveArray={moviesSaveArray}
         />
         <MoreButton
           moviesArray={moviesArray}

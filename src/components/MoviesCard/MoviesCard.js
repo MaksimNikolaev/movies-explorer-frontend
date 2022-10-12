@@ -1,12 +1,17 @@
 import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
 
-const MoviesCard = ({ movie, duration, isSaved, handleSavesMovies }) => {
+const MoviesCard = ({ movie, duration, saved, handleSavesMovies, statusBtn }) => {
   const { pathname } = useLocation();
 
   const onHandleSavesMovies = (e) => {
     e.preventDefault();
     handleSavesMovies(movie);
+  };
+
+  const onHandleDeleteMovies = (e) => {
+    e.preventDefault();
+    console.log('Удаление')
   };
   return (
     <li className="movies-card__item">
@@ -25,12 +30,16 @@ const MoviesCard = ({ movie, duration, isSaved, handleSavesMovies }) => {
       </div>
       <button
         className={`movies-card__btn ${
-          isSaved
+          pathname === "/saved-movies" ?
+          "movies-card__btn_type_active" :
+          saved
             ? "movies-card__btn_type_active"
             : "movies-card__btn_type_inactive"
         }`}
         type="button"
-        onClick={onHandleSavesMovies}
+        onClick={
+          pathname === "/saved-movies" ? onHandleDeleteMovies : saved ? onHandleDeleteMovies : onHandleSavesMovies
+      }
       >
         Сохранить
       </button>
