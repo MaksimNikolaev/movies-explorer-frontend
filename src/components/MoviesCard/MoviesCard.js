@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
 
-const MoviesCard = ({ movie, duration, saved, handleSavesMovies, statusBtn }) => {
+const MoviesCard = ({ movie, duration, saved, handleSavesMovies, handleDeleteMovies }) => {
   const { pathname } = useLocation();
 
   const onHandleSavesMovies = (e) => {
@@ -11,7 +11,7 @@ const MoviesCard = ({ movie, duration, saved, handleSavesMovies, statusBtn }) =>
 
   const onHandleDeleteMovies = (e) => {
     e.preventDefault();
-    console.log('Удаление')
+    handleDeleteMovies(movie)
   };
   return (
     <li className="movies-card__item">

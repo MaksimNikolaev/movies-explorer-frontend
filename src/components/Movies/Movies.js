@@ -7,7 +7,7 @@ import MoreButton from "../MoreButton/MoreButton";
 import moviesApi from "../../utils/MoviesApi";
 import { useEffect, useState } from "react";
 
-const Movies = ({ loggedIn, handleSavesMovies, moviesSaveArray}) => {
+const Movies = ({ loggedIn, handleSavesMovies, moviesSaveArray, handleDeleteMovies}) => {
   const [moviesArray, setMoviesArray] = useState([]);
   const [moviesDisplay, setMoviesDisplay] = useState({});
   const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
@@ -115,6 +115,7 @@ const Movies = ({ loggedIn, handleSavesMovies, moviesSaveArray}) => {
           countMoviesOfScreens={countMoviesOfScreens}
           isLoading={isLoading}
           handleSavesMovies={handleSavesMovies}
+          handleDeleteMovies={handleDeleteMovies}
           dataReceived={dataReceived}
           moviesSaveArray={moviesSaveArray}
         />

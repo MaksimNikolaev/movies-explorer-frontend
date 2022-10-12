@@ -32,6 +32,13 @@ class MainApi {
     }).then(this._errorHandler);
   }
 
+  removeMovies(id) {
+    return fetch(`${this._url}movies/${id}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._errorHandler);
+  }
+
   register (name, email, password) {
     return fetch(`${this._url}signup`, {
       method: 'POST',

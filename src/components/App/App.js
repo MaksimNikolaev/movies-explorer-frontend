@@ -128,7 +128,6 @@ const App = () => {
   const handleSavesMovies = (movie) => {
     mainApi.createMovies(movie)
     .then((movie) => {
-      console.log(movie);
     setMoviesSaveArray([movie, ...moviesSaveArray]); 
   })
   .catch((err) => {
@@ -137,9 +136,15 @@ const App = () => {
   };
 
   const handleDeleteMovies = (movie) => {
-    
+    mainApi
+    .removeMovies(movie._id)
+    .then(() => {
+      setMoviesSaveArray((state) => state.filter((item) => item._id !== movie._id));
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    });
   };
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -149,7 +154,7 @@ const App = () => {
             path="/movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <Movies loggedIn={loggedIn} handleSavesMovies={handleSavesMovies} moviesSaveArray={moviesSaveArray}/>
+                <Movies loggedIn={loggedIn} handleSavesMovies={handleSavesMovies} handleDeleteMovies={handleDeleteMovies} moviesSaveArray={moviesSaveArray}/>
               </ProtectedRoute>
             }
           ></Route>
@@ -157,7 +162,7 @@ const App = () => {
             path="/saved-movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <SavedMovies loggedIn={loggedIn}  moviesSaveArray={moviesSaveArray} dataReceived={dataReceived} />
+                <SavedMovies loggedIn={loggedIn}  moviesSaveArray={moviesSaveArray} dataReceived={dataReceived} handleDeleteMovies={handleDeleteMovies}/>
               </ProtectedRoute>
             }
           ></Route>
