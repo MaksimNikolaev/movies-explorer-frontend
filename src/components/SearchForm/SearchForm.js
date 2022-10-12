@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./SearchForm.css";
 
-const SearchForm = ({handleSearchSubmit}) => {
+const SearchForm = ({handleSearchSubmit, shortFilmStatus, handleChangeCheckbox}) => {
   const [inputSearch, setInputSearch] = useState("");
   const [errorsSearch, setErrorsSearch] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("RequestText")) {
+      setInputSearch(localStorage.getItem("RequestText"))
+    }
+  }, []);
 
   function handleChangeInput(e) {
     setInputSearch(e.target.value);
@@ -17,7 +23,6 @@ const SearchForm = ({handleSearchSubmit}) => {
         setErrorsSearch("");
         handleSearchSubmit(inputSearch);
       }
-
   }
 
   return (
@@ -37,7 +42,7 @@ const SearchForm = ({handleSearchSubmit}) => {
           Найти
         </button>
         <label className="search__checkbox-container">
-          <input type="checkbox" id="search__checkbox" />
+          <input type="checkbox" id="search__checkbox" checked={shortFilmStatus} onChange={handleChangeCheckbox}/>
           <span className="search__checkbox-span"></span>
           <label htmlFor="search__checkbox" className="search__label">
             Короткометражки

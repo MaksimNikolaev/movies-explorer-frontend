@@ -7,8 +7,6 @@ import Student from "../Student/Student";
 import Footer from "../Footer/Footer";
 
 const Main = ({loggedIn}) => {
-  const textColorHeader = 'black';
-
   return (
     <>
       <Header isBlue={true} loggedIn={loggedIn} textColorBlack={false}/>

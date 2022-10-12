@@ -13,6 +13,15 @@
   row-gap: 60px;
 }  
 
+.movies-card__not-found {
+  font-weight: 400;
+  font-size: 14px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  color: #073042;
+}
+
 @media (max-width: 1023px) {
   .movies-card {
     padding: 70px 30px 12px 30px;

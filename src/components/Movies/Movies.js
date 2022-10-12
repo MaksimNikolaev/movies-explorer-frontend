@@ -8,17 +8,32 @@ import moviesApi from "../../utils/MoviesApi";
 import { useEffect, useState } from "react";
 import mainApi from "../../utils/MainApi";
 
-const Movies = ({loggedIn}) => {
+const Movies = ({ loggedIn }) => {
   const [moviesArray, setMoviesArray] = useState([]);
-  const [moviesDisplay, setMoviesDisplay] = useState({
-    initilalQuantity: 0,
-    inc: 0,
-  });
+  const [moviesDisplay, setMoviesDisplay] = useState({});
   const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [shortFilmStatus, setShortFilmStatus] = useState(false);
+  const [dataReceived, setDataReceived] = useState(false);
 
   useEffect(() => {
     handleChangeWidthScreen();
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("movies")) {
+      const movies = JSON.parse(localStorage.getItem("movies"));
+      setMoviesArray(movies);
+      setDataReceived(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("shortFilmStatus") === "true") {
+      setShortFilmStatus(true);
+    } else {
+      setShortFilmStatus(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -50,9 +65,13 @@ const Movies = ({loggedIn}) => {
       .getMovies()
       .then((res) => {
         handleChangeWidthScreen();
-        const filterData = filterMovies(res, inputSearch);
+        const filterData = filterMovies(res, inputSearch, shortFilmStatus);
         localStorage.setItem("movies", JSON.stringify(filterData));
+        localStorage.setItem("RequestText", inputSearch);
+        localStorage.setItem("shortFilmStatus", shortFilmStatus);
         setMoviesArray(filterData);
+        setShortFilmStatus(shortFilmStatus);
+        setDataReceived(true);
       })
       .catch((err) => {
         console.log(err);
@@ -62,12 +81,16 @@ const Movies = ({loggedIn}) => {
       });
   };
 
-  const filterMovies = (data, inputSearch) => {
+  const filterMovies = (data, inputSearch, shortFilmStatus) => {
     return data.filter((movie) => {
-      return (
+      const filterLowerCase =
         movie.nameEN.toLowerCase().includes(inputSearch.toLowerCase()) ||
-        movie.nameRU.toLowerCase().includes(inputSearch.toLowerCase())
-      );
+        movie.nameRU.toLowerCase().includes(inputSearch.toLowerCase());
+      if (!shortFilmStatus) {
+        return filterLowerCase;
+      } else {
+        return shortFilmStatus && movie.duration <= 40;
+      }
     });
   };
 
@@ -77,18 +100,27 @@ const Movies = ({loggedIn}) => {
 
   const handleSavesMovies = () => {
     mainApi.createMovies();
-  }
+  };
+
+  const handleChangeCheckbox = () => {
+    shortFilmStatus ? setShortFilmStatus(false) : setShortFilmStatus(true);
+  };
 
   return (
     <>
-      <Header isBlue={false} loggedIn={loggedIn} textColorBlack={true}/>
+      <Header isBlue={false} loggedIn={loggedIn} textColorBlack={true} />
       <main className="main">
-        <SearchForm handleSearchSubmit={handleSearchSubmit} />
+        <SearchForm
+          handleSearchSubmit={handleSearchSubmit}
+          shortFilmStatus={shortFilmStatus}
+          handleChangeCheckbox={handleChangeCheckbox}
+        />
         <MoviesCardList
           moviesArray={moviesArray}
           countMoviesOfScreens={countMoviesOfScreens}
           isLoading={isLoading}
           handleSavesMovies={handleSavesMovies}
+          dataReceived={dataReceived}
         />
         <MoreButton
           moviesArray={moviesArray}
