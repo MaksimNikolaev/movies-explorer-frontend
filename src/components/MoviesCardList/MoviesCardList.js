@@ -36,7 +36,7 @@ const MoviesCardList = ({
     return (
       <section className="movies-card">
         <ul className="movies-card__list">
-          {moviesArray.slice(0, countMoviesOfScreens).map((item, i) => {
+          {moviesArray.slice(0, countMoviesOfScreens).map((item) => {
             function getTimeFromMins(mins) {
               let hours = Math.trunc(mins / 60);
               let minutes = mins % 60;
@@ -44,7 +44,7 @@ const MoviesCardList = ({
             }
             return (
               <MoviesCard
-                key={i}
+                key={item.id || item._id}
                 movie={item}
                 duration={getTimeFromMins(item.duration)}
                 saved={getSavedMovieCard(moviesSaveArray, item)}
