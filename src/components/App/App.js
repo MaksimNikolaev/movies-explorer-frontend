@@ -145,7 +145,7 @@ const App = () => {
       .createMovies(movie)
       .then((movie) => {
         setMoviesSaveArray([...moviesSaveArray, movie]);
-        localStorage.setItem("saveMovies", JSON.stringify(moviesSaveArray));
+       // localStorage.setItem("saveMovies", JSON.stringify(moviesSaveArray));
         setDataReceived(true);
       })
       .catch((err) => {
@@ -166,6 +166,7 @@ const App = () => {
           savedMoviesAfterFilter.filter((i) => i._id !== movie._id)
         );
         setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
+        setDataReceived(true);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
