@@ -30,7 +30,7 @@ const SavedMovies = ({
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem("notFound") === "true") {
+    if (localStorage.getItem("notFoundSaveMovies") === "true") {
       setDataNotFound(true);
     } else {
       setDataNotFound(false);

@@ -26,12 +26,16 @@ const SearchForm = ({handleSearchSubmit, shortFilmStatus, handleChangeCheckbox})
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (pathname === "/movies") {
       if (inputSearch === "") {
         setErrorsSearch("Нужно ввести ключевое слово");
       } else {
         setErrorsSearch("");
         handleSearchSubmit(inputSearch, shortFilmStatus);
       }
+    } else {
+      handleSearchSubmit(inputSearch, shortFilmStatus);
+    }      
   }
 
   return (
