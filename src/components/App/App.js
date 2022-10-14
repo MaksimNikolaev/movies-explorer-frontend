@@ -21,9 +21,7 @@ const App = () => {
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [moviesSaveArray, setMoviesSaveArray] = useState([]);
   const [dataReceived, setDataReceived] = useState(false);
-  const [savedMoviesAfterFilter, setSavedMoviesAfterFilter] = useState(
-    JSON.parse(localStorage.getItem("saveMovies"))
-  );
+  const [savedMoviesAfterFilter, setSavedMoviesAfterFilter] = useState(JSON.parse(localStorage.getItem("saveMovies")));
 
   useEffect(() => {
     checkToken();
@@ -145,7 +143,7 @@ const App = () => {
       .createMovies(movie)
       .then((movie) => {
         setMoviesSaveArray([...moviesSaveArray, movie]);
-       // localStorage.setItem("saveMovies", JSON.stringify(moviesSaveArray));
+        //localStorage.setItem("saveMovies", JSON.stringify(moviesSaveArray));
         setDataReceived(true);
       })
       .catch((err) => {
@@ -162,11 +160,18 @@ const App = () => {
     mainApi
       .removeMovies(movie)
       .then(() => {
-        setSavedMoviesAfterFilter(
-          savedMoviesAfterFilter.filter((i) => i._id !== movie._id)
-        );
-        setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
-        setDataReceived(true);
+        if (savedMoviesAfterFilter === null) {
+          setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
+          //localStorage.setItem("saveMovies", JSON.stringify(savedMoviesAfterFilter.filter((i) => i._id !== movie._id)))
+          setDataReceived(true);
+        } else {
+          setSavedMoviesAfterFilter(
+            savedMoviesAfterFilter.filter((i) => i._id !== movie._id)
+          );
+          setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
+          localStorage.setItem("saveMovies", JSON.stringify(savedMoviesAfterFilter.filter((i) => i._id !== movie._id)))
+          setDataReceived(true);
+        }        
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);

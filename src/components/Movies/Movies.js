@@ -20,12 +20,21 @@ const Movies = ({
   const [isLoading, setIsLoading] = useState(false);
   const [shortFilmStatus, setShortFilmStatus] = useState(false);
   const [dataReceived, setDataReceived] = useState(false);
+  const [dataNotFound, setDataNotFound] = useState(Boolean(localStorage.getItem("notFound")))
 
   useEffect(() => {
     if (localStorage.getItem("movies")) {
       const movies = JSON.parse(localStorage.getItem("movies"));
       setMoviesArray(movies);
       setDataReceived(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("notFound") === "true") {
+      setDataNotFound(true);
+    } else {
+      setDataNotFound(false);
     }
   }, []);
 
@@ -72,13 +81,25 @@ const Movies = ({
       .getMovies()
       .then((res) => {
         handleChangeWidthScreen();
-        const filterData = filterMovies(res, inputSearch, shortFilmStatus);
+        const filterData = filterMovies(res, inputSearch, shortFilmStatus);        
+        if (filterData.length === 0) {
+          setDataNotFound(true)
+          localStorage.setItem("notFound", true);
+          localStorage.setItem("RequestText", inputSearch);
+          localStorage.setItem("shortFilmStatus", shortFilmStatus);
+          setMoviesArray(filterData);
+        setShortFilmStatus(shortFilmStatus);
+        setDataReceived(true); 
+        } else {
+        setDataNotFound(false)
+        localStorage.setItem("notFound", false);
         localStorage.setItem("movies", JSON.stringify(filterData));
         localStorage.setItem("RequestText", inputSearch);
         localStorage.setItem("shortFilmStatus", shortFilmStatus);
         setMoviesArray(filterData);
         setShortFilmStatus(shortFilmStatus);
-        setDataReceived(true);
+        setDataReceived(true);      
+        }  
       })
       .catch((err) => {
         console.log(err);
@@ -113,6 +134,7 @@ const Movies = ({
           handleDeleteMovies={handleDeleteMovies}
           dataReceived={dataReceived}
           moviesSaveArray={moviesSaveArray}
+          dataNotFound={dataNotFound}
         />
         <MoreButton
           moviesArray={moviesArray}

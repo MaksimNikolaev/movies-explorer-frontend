@@ -17,9 +17,11 @@ const SavedMovies = ({
 }) => {
   const [shortFilmStatus, setShortFilmStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [dataNotFound, setDataNotFound] = useState(
+    Boolean(localStorage.getItem("notFoundSaveMovies"))
+  );
 
   useEffect(() => {
-    // setShortFilmStatus(Boolean(localStorage.getItem("shortFilmStatusSaveMovies")))
     if (localStorage.getItem("shortFilmStatusSaveMovies") === "true") {
       setShortFilmStatus(true);
     } else {
@@ -27,13 +29,13 @@ const SavedMovies = ({
     }
   }, []);
 
-/*   useEffect(() => {
-    if (localStorage.getItem("saveMovies")) {
-      const movies = JSON.parse(localStorage.getItem("saveMovies"));
-      setSavedMoviesAfterFilter(movies);
-      setDataReceived(true);
+  useEffect(() => {
+    if (localStorage.getItem("notFound") === "true") {
+      setDataNotFound(true);
+    } else {
+      setDataNotFound(false);
     }
-  }, []); */
+  }, []);
 
   const handleSearchSubmit = (inputSearch, shortFilmStatus) => {
     setIsLoading(true);
@@ -45,12 +47,21 @@ const SavedMovies = ({
           inputSearch,
           shortFilmStatus
         );
-        localStorage.setItem("saveMovies", JSON.stringify(filterData));
-        localStorage.setItem("requestTextSaveMovies", inputSearch);
-        localStorage.setItem("shortFilmStatusSaveMovies", shortFilmStatus);
-        setSavedMoviesAfterFilter(filterData);
-        setShortFilmStatus(shortFilmStatus);
-        setDataReceived(true);
+        if (filterData.length === 0) {
+          setDataNotFound(true);
+          localStorage.setItem("notFoundSaveMovies", true);
+          localStorage.setItem("requestTextSaveMovies", inputSearch);
+          localStorage.setItem("shortFilmStatusSaveMovies", shortFilmStatus);
+        } else {
+          setDataNotFound(false);
+          localStorage.setItem("notFoundSaveMovies", false);
+          localStorage.setItem("saveMovies", JSON.stringify(filterData));
+          localStorage.setItem("requestTextSaveMovies", inputSearch);
+          localStorage.setItem("shortFilmStatusSaveMovies", shortFilmStatus);
+          setSavedMoviesAfterFilter(filterData);
+          setShortFilmStatus(shortFilmStatus);
+          setDataReceived(true);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -74,11 +85,20 @@ const SavedMovies = ({
           handleChangeCheckbox={handleChangeCheckbox}
         />
         <MoviesCardList
-          moviesArray={savedMoviesAfterFilter || moviesSaveArray}
+          moviesArray={
+            dataNotFound
+              ? savedMoviesAfterFilter
+              : savedMoviesAfterFilter === null
+              ? moviesSaveArray
+              : savedMoviesAfterFilter.length === 0
+              ? moviesSaveArray
+              : savedMoviesAfterFilter
+          }
           moviesSaveArray={moviesSaveArray}
           dataReceived={dataReceived}
           handleDeleteMovies={handleDeleteMovies}
           isLoading={isLoading}
+          dataNotFound={dataNotFound}
         />
       </main>
       <Footer />
