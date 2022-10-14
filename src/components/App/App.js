@@ -140,7 +140,7 @@ const App = () => {
       movie.trailerLink = "https://null.ru";
     }
     mainApi
-      .createMovies(movie)
+      .createMovies(movie, localStorage.getItem("jwt"))
       .then((movie) => {
         setMoviesSaveArray([...moviesSaveArray, movie]);
         //localStorage.setItem("saveMovies", JSON.stringify(moviesSaveArray));
@@ -158,7 +158,7 @@ const App = () => {
       }
     });
     mainApi
-      .removeMovies(movie)
+      .removeMovies(movie, localStorage.getItem("jwt"))
       .then(() => {
         if (savedMoviesAfterFilter === null) {
           setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));

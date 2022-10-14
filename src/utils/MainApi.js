@@ -12,10 +12,14 @@ class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  createMovies(movies) {
+  createMovies(movies,token) {
     return fetch(`${this._url}movies`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization" : `Bearer ${token}`
+      },
       body: JSON.stringify({
           country: movies.country,
           director: movies.director,
@@ -32,10 +36,14 @@ class MainApi {
     }).then(this._errorHandler);
   }
 
-  removeMovies(movies) {
+  removeMovies(movies, token) {
     return fetch(`${this._url}movies/${movies._id}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization" : `Bearer ${token}`
+      },
     }).then(this._errorHandler);
   }
 
