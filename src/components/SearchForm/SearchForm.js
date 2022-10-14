@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./SearchForm.css";
 
 const SearchForm = ({handleSearchSubmit, shortFilmStatus, handleChangeCheckbox}) => {
   const [inputSearch, setInputSearch] = useState("");
   const [errorsSearch, setErrorsSearch] = useState("");
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if (localStorage.getItem("RequestText")) {
+    if (pathname === "/movies") {
+      if (localStorage.getItem("RequestText")) {
       setInputSearch(localStorage.getItem("RequestText"))
     }
-  }, []);
+    }    
+    if (pathname === "/saved-movies") {
+      if (localStorage.getItem("requestTextSaveMovies")) {
+      setInputSearch(localStorage.getItem("requestTextSaveMovies"))
+    }
+    } 
+  }, []); 
 
   function handleChangeInput(e) {
     setInputSearch(e.target.value);
@@ -21,7 +30,7 @@ const SearchForm = ({handleSearchSubmit, shortFilmStatus, handleChangeCheckbox})
         setErrorsSearch("Нужно ввести ключевое слово");
       } else {
         setErrorsSearch("");
-        handleSearchSubmit(inputSearch);
+        handleSearchSubmit(inputSearch, shortFilmStatus);
       }
   }
 

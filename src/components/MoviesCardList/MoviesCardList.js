@@ -2,7 +2,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
 
-const MoviesCardList = ({ moviesArray, countMoviesOfScreens, isLoading, handleSavesMovies, handleDeleteMovies, dataReceived, moviesSaveArray, statusBtn }) => {
+const MoviesCardList = ({ moviesArray, countMoviesOfScreens, isLoading, handleSavesMovies, handleDeleteMovies, dataReceived, moviesSaveArray }) => {
 
   const getSavedMovieCard = (moviesArray, movie) => {
     return moviesArray.find((savedMovie) => savedMovie.movieId === movie.id);
@@ -42,7 +42,6 @@ const MoviesCardList = ({ moviesArray, countMoviesOfScreens, isLoading, handleSa
                   saved={getSavedMovieCard(
                     moviesSaveArray,
                     item)}
-                  statusBtn={statusBtn}  
                   handleSavesMovies={handleSavesMovies}
                   handleDeleteMovies={handleDeleteMovies}
                 />

@@ -6,18 +6,20 @@ import "./Movies.css";
 import MoreButton from "../MoreButton/MoreButton";
 import moviesApi from "../../utils/MoviesApi";
 import { useEffect, useState } from "react";
+import filterMovies from "../../utils/filter";
 
-const Movies = ({ loggedIn, handleSavesMovies, moviesSaveArray, handleDeleteMovies}) => {
+const Movies = ({
+  loggedIn,
+  handleSavesMovies,
+  moviesSaveArray,
+  handleDeleteMovies,
+}) => {
   const [moviesArray, setMoviesArray] = useState([]);
   const [moviesDisplay, setMoviesDisplay] = useState({});
   const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [shortFilmStatus, setShortFilmStatus] = useState(false);
   const [dataReceived, setDataReceived] = useState(false);
-
-  useEffect(() => {
-    handleChangeWidthScreen();
-  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("movies")) {
@@ -47,18 +49,24 @@ const Movies = ({ loggedIn, handleSavesMovies, moviesSaveArray, handleDeleteMovi
     };
   });
 
+  useEffect(() => {
+    handleChangeWidthScreen();
+  }, []);
+
   const handleChangeWidthScreen = () => {
     if (window.innerWidth < 768) {
       setMoviesDisplay({ initilalQuantity: 5, inc: 2 });
+      setCountMoviesOfScreens(5);
     } else if (window.innerWidth < 1280) {
       setMoviesDisplay({ initilalQuantity: 8, inc: 2 });
+      setCountMoviesOfScreens(8);
     } else {
       setMoviesDisplay({ initilalQuantity: 12, inc: 3 });
+      setCountMoviesOfScreens(12);
     }
-    setCountMoviesOfScreens(moviesDisplay.initilalQuantity);
   };
 
-  const handleSearchSubmit = (inputSearch) => {
+  const handleSearchSubmit = (inputSearch, shortFilmStatus) => {
     setIsLoading(true);
     moviesApi
       .getMovies()
@@ -78,19 +86,6 @@ const Movies = ({ loggedIn, handleSavesMovies, moviesSaveArray, handleDeleteMovi
       .finally(() => {
         setIsLoading(false);
       });
-  };
-
-  const filterMovies = (data, inputSearch, shortFilmStatus) => {
-    return data.filter((movie) => {
-      const filterLowerCase =
-        movie.nameEN.toLowerCase().includes(inputSearch.toLowerCase()) ||
-        movie.nameRU.toLowerCase().includes(inputSearch.toLowerCase());
-      if (!shortFilmStatus) {
-        return filterLowerCase;
-      } else {
-        return shortFilmStatus && movie.duration <= 40;
-      }
-    });
   };
 
   const loadMore = () => {
