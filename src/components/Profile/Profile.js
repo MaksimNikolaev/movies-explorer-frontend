@@ -36,7 +36,7 @@ const Profile = ({ handleLogOut, handleUpdateProfile, loggedIn }) => {
 
   return (
     <div className="main">
-      <Header isBlue={false} loggedIn={loggedIn} />
+      <Header isBlue={false} loggedIn={loggedIn} textColorBlack={true}/>
       <section className="profile">
         <h1 className="profile__title">Привет, {currentUser.name}</h1>
         {isEditProfile ? (
