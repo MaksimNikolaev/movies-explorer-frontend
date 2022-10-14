@@ -86,7 +86,7 @@ const App = () => {
   const handleLogOut = () => {
     localStorage.clear();
     setLoggedIn(false);
-    navigate("/signin");
+    navigate("/");
   };
 
   const checkToken = () => {
