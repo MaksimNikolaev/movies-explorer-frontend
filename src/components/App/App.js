@@ -133,12 +133,6 @@ const App = () => {
   };
 
   const handleSavesMovies = (movie) => {
-    const reg = movie.trailerLink.match(
-      /^https?:\/\/(w{3}\.)?[a-z\d]+\.[\w\-._~:/?#[\]@!$&'()*+,;=]{2,}#?$/i
-    );
-    if (!reg) {
-      movie.trailerLink = "https://null.ru";
-    }
     mainApi
       .createMovies(movie, localStorage.getItem("jwt"))
       .then((movie) => {
