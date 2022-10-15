@@ -1,3 +1,5 @@
+import { SHORT_MOVIES_DURATION } from "./constants";
+
 const filterMovies = (data, inputSearch, shortFilmStatus) => {
   return data.filter((movie) => {
     const reg = movie.trailerLink.match(
@@ -15,7 +17,7 @@ const filterMovies = (data, inputSearch, shortFilmStatus) => {
     if (!shortFilmStatus) {
       return filterLowerCase;
     } else {
-      return filterLowerCase && (movie.duration <= 40);
+      return filterLowerCase && (movie.duration <= SHORT_MOVIES_DURATION);
     }
   });
 }; 

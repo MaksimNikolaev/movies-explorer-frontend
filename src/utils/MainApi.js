@@ -1,3 +1,5 @@
+import { BASE_URL } from "./constants";
+
 class MainApi {
   constructor(config) {
     this._url = config.url;
@@ -106,7 +108,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "https://api.films.nomoredomains.sbs/",
+  url: BASE_URL,
   headers: {
     authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "content-type": "application/json",

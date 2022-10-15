@@ -4,6 +4,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
 import MoreButton from "../MoreButton/MoreButton";
+import { DEVICE_PARAMS } from '../../utils/constants.js';
 import moviesApi from "../../utils/MoviesApi";
 import { useEffect, useState } from "react";
 import filterMovies from "../../utils/filter";
@@ -26,6 +27,7 @@ const Movies = ({
   const [dataNotFound, setDataNotFound] = useState(
     Boolean(localStorage.getItem("notFound"))
   );
+  const { desktop, tablet, mobile } = DEVICE_PARAMS;
 
   useEffect(() => {
     if (localStorage.getItem("movies")) {
@@ -76,15 +78,15 @@ const Movies = ({
   }, []);
 
   const handleChangeWidthScreen = () => {
-    if (window.innerWidth < 768) {
-      setMoviesDisplay({ initilalQuantity: 5, inc: 2 });
-      setCountMoviesOfScreens(5);
-    } else if (window.innerWidth < 1280) {
-      setMoviesDisplay({ initilalQuantity: 8, inc: 2 });
-      setCountMoviesOfScreens(8);
+    if (window.innerWidth < mobile.width) {
+      setMoviesDisplay(mobile.movies);
+      setCountMoviesOfScreens(mobile.movies.initilalQuantity);
+    } else if (window.innerWidth < tablet.width) {
+      setMoviesDisplay(tablet.movies);
+      setCountMoviesOfScreens(tablet.movies.initilalQuantity);
     } else {
-      setMoviesDisplay({ initilalQuantity: 12, inc: 3 });
-      setCountMoviesOfScreens(12);
+      setMoviesDisplay(desktop.movies);
+      setCountMoviesOfScreens(desktop.movies.initilalQuantity);
     }
   };
 

@@ -1,3 +1,5 @@
+import { MOVIES_URL } from "./constants";
+
 class MoviesApi {
   constructor(config) {
     this._url = config.url;
@@ -21,7 +23,7 @@ class MoviesApi {
 
 
 const moviesApi = new MoviesApi({
-  url: "https://api.nomoreparties.co/beatfilm-movies",
+  url: MOVIES_URL,
   headers: {
     //authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "content-type": "application/json",
