@@ -15,12 +15,17 @@ const Movies = ({
   handleDeleteMovies,
 }) => {
   const [moviesArray, setMoviesArray] = useState([]);
+  const [saveMoviesServer, setSaveMoviesServer] = useState(
+    JSON.parse(localStorage.getItem("moviesServer"))
+  );
   const [moviesDisplay, setMoviesDisplay] = useState({});
   const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [shortFilmStatus, setShortFilmStatus] = useState(false);
   const [dataReceived, setDataReceived] = useState(false);
-  const [dataNotFound, setDataNotFound] = useState(Boolean(localStorage.getItem("notFound")))
+  const [dataNotFound, setDataNotFound] = useState(
+    Boolean(localStorage.getItem("notFound"))
+  );
 
   useEffect(() => {
     if (localStorage.getItem("movies")) {
@@ -29,6 +34,14 @@ const Movies = ({
       setDataReceived(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("moviesServer")) {
+      const movies = JSON.parse(localStorage.getItem("moviesServer"));
+      setSaveMoviesServer(movies);
+      setDataReceived(true);
+    }
+  }, [dataReceived]);
 
   useEffect(() => {
     if (localStorage.getItem("notFound") === "true") {
@@ -77,36 +90,66 @@ const Movies = ({
 
   const handleSearchSubmit = (inputSearch, shortFilmStatus) => {
     setIsLoading(true);
-    moviesApi
-      .getMovies()
-      .then((res) => {
-        handleChangeWidthScreen();
-        const filterData = filterMovies(res, inputSearch, shortFilmStatus);        
-        if (filterData.length === 0) {
-          setDataNotFound(true)
-          localStorage.setItem("notFound", true);
-          localStorage.setItem("RequestText", inputSearch);
-          localStorage.setItem("shortFilmStatus", shortFilmStatus);
-          setMoviesArray(filterData);
+    if (saveMoviesServer !== null) {
+      const filterData = filterMovies(
+        saveMoviesServer,
+        inputSearch,
+        shortFilmStatus
+      );
+      if (filterData.length === 0) {
+        setDataNotFound(true);
+        localStorage.setItem("notFound", true);
+        localStorage.setItem("RequestText", inputSearch);
+        localStorage.setItem("shortFilmStatus", shortFilmStatus);
+        setMoviesArray(filterData);
         setShortFilmStatus(shortFilmStatus);
-        setDataReceived(true); 
-        } else {
-        setDataNotFound(false)
+        setDataReceived(true);
+        setIsLoading(false);
+      } else {
+        setDataNotFound(false);
         localStorage.setItem("notFound", false);
         localStorage.setItem("movies", JSON.stringify(filterData));
         localStorage.setItem("RequestText", inputSearch);
         localStorage.setItem("shortFilmStatus", shortFilmStatus);
         setMoviesArray(filterData);
         setShortFilmStatus(shortFilmStatus);
-        setDataReceived(true);      
-        }  
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
+        setDataReceived(true);
         setIsLoading(false);
-      });
+      }
+    } else {
+      moviesApi
+        .getMovies()
+        .then((res) => {
+          handleChangeWidthScreen();
+          const filterData = filterMovies(res, inputSearch, shortFilmStatus);
+          localStorage.setItem("moviesServer", JSON.stringify(res));
+          if (filterData.length === 0) {
+            setDataNotFound(true);
+            localStorage.setItem("notFound", true);
+            localStorage.setItem("RequestText", inputSearch);
+            localStorage.setItem("shortFilmStatus", shortFilmStatus);
+            setMoviesArray(filterData);
+            setSaveMoviesServer(filterData);
+            setShortFilmStatus(shortFilmStatus);
+            setDataReceived(true);
+          } else {
+            setDataNotFound(false);
+            localStorage.setItem("notFound", false);
+            localStorage.setItem("movies", JSON.stringify(filterData));
+            localStorage.setItem("RequestText", inputSearch);
+            localStorage.setItem("shortFilmStatus", shortFilmStatus);
+            setMoviesArray(filterData);
+            setShortFilmStatus(shortFilmStatus);
+            setDataReceived(true);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   };
 
   const loadMore = () => {
