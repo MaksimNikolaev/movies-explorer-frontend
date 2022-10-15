@@ -1,3 +1,4 @@
+import getTimeFromMins from "../../utils/getTimeFromMins";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css";
@@ -36,12 +37,7 @@ const MoviesCardList = ({
     return (
       <section className="movies-card">
         <ul className="movies-card__list">
-          {moviesArray.slice(0, countMoviesOfScreens).map((item) => {
-            function getTimeFromMins(mins) {
-              let hours = Math.trunc(mins / 60);
-              let minutes = mins % 60;
-              return hours + "ч " + minutes + "м";
-            }
+          {moviesArray.slice(0, countMoviesOfScreens).map((item) => {            
             return (
               <MoviesCard
                 key={item.id || item._id}
