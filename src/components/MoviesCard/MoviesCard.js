@@ -39,10 +39,10 @@ const MoviesCard = ({
         <button
           className={`movies-card__btn ${
             pathname === "/saved-movies"
-              ? "movies-card__btn_type_active"
+              ? "movies-card__btn_type_delete"
               : saved
-              ? "movies-card__btn_type_active"
-              : "movies-card__btn_type_inactive"
+              ? "movies-card__btn_type_like"
+              : "movies-card__btn_type_save"
           }`}
           type="button"
           onClick={
