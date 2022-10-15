@@ -31,6 +31,12 @@ const App = () => {
     getSaveMovies();
   }, [dataReceived]);
 
+  const handleTokenEdit = (err) => {
+    if (err === "Ошибка: 401") {
+      handleLogOut();
+    }
+  }
+
   const getSaveMovies = () => {
     mainApi
       .getSaveMovies(localStorage.getItem("jwt"))
@@ -54,7 +60,8 @@ const App = () => {
         if (err === "Ошибка: 409") {
           setInfoTooltipOpen(true);
           setMessage("Пользователь с таким email уже существует.");
-        } else {
+        } 
+        else {
           setInfoTooltipOpen(true);
           setMessage("При регистрации пользователя произошла ошибка.");
         }
@@ -105,7 +112,7 @@ const App = () => {
             setCurrentUser(userData);
           }
         })
-        .catch((err) => console.error(err));
+        .catch((err) => handleTokenEdit(err));
     }
   };
 
@@ -141,7 +148,7 @@ const App = () => {
         setDataReceived(true);
       })
       .catch((err) => {
-        console.log(err);
+        handleTokenEdit(err);
       });
   };
 
@@ -168,7 +175,7 @@ const App = () => {
         }        
       })
       .catch((err) => {
-        console.log(`Ошибка: ${err}`);
+        handleTokenEdit(err)
       });
   };
 
