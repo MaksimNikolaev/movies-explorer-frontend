@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
@@ -21,7 +21,7 @@ const App = () => {
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [moviesSaveArray, setMoviesSaveArray] = useState([]);
   const [dataReceived, setDataReceived] = useState(false);
-  const [savedMoviesAfterFilter, setSavedMoviesAfterFilter] = useState(JSON.parse(localStorage.getItem("saveMovies")));
+  const { pathname } = useLocation();
 
   useEffect(() => {
     checkToken();
@@ -30,6 +30,13 @@ const App = () => {
   useEffect(() => {
     getSaveMovies();
   }, [dataReceived]);
+
+  useEffect(() => {
+    if (pathname === "/saved-movies") {
+      getSaveMovies();
+    }
+    
+  }, [pathname]);
 
   const handleTokenEdit = (err) => {
     if (err === "Ошибка: 401") {
@@ -161,18 +168,8 @@ const App = () => {
     mainApi
       .removeMovies(movie, localStorage.getItem("jwt"))
       .then(() => {
-        if (savedMoviesAfterFilter === null) {
           setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
-          //localStorage.setItem("saveMovies", JSON.stringify(savedMoviesAfterFilter.filter((i) => i._id !== movie._id)))
           setDataReceived(true);
-        } else {
-          setSavedMoviesAfterFilter(
-            savedMoviesAfterFilter.filter((i) => i._id !== movie._id)
-          );
-          setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
-          localStorage.setItem("saveMovies", JSON.stringify(savedMoviesAfterFilter.filter((i) => i._id !== movie._id)))
-          setDataReceived(true);
-        }        
       })
       .catch((err) => {
         handleTokenEdit(err)
@@ -203,8 +200,7 @@ const App = () => {
                 <SavedMovies
                   loggedIn={loggedIn}
                   moviesSaveArray={moviesSaveArray}
-                  savedMoviesAfterFilter={savedMoviesAfterFilter}
-                  setSavedMoviesAfterFilter={setSavedMoviesAfterFilter}
+                  setMoviesSaveArray={setMoviesSaveArray}
                   dataReceived={dataReceived}
                   setDataReceived={setDataReceived}
                   handleDeleteMovies={handleDeleteMovies}

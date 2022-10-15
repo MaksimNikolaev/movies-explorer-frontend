@@ -11,7 +11,6 @@ const MoviesCardList = ({
   handleDeleteMovies,
   dataReceived,
   moviesSaveArray,
-  dataNotFound,
 }) => {
   const getSavedMovieCard = (moviesArray, movie) => {
     return moviesArray.find((savedMovie) => savedMovie.movieId === movie.id);
@@ -25,7 +24,7 @@ const MoviesCardList = ({
     );
   }
 
-  if (dataNotFound) {
+  if (moviesArray.length === 0) {
     return (
       <section className="movies-card">
         <p className="movies-card__not-found">Ничего не найдено</p>

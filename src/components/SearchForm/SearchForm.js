@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./SearchForm.css";
 
-const SearchForm = ({handleSearchSubmit, shortFilmStatus, handleChangeCheckbox}) => {
+const SearchForm = ({
+  handleSearchSubmit,
+  shortFilmStatus,
+  handleChangeCheckbox,
+}) => {
   const [inputSearch, setInputSearch] = useState("");
   const [errorsSearch, setErrorsSearch] = useState("");
   const { pathname } = useLocation();
@@ -10,15 +14,10 @@ const SearchForm = ({handleSearchSubmit, shortFilmStatus, handleChangeCheckbox})
   useEffect(() => {
     if (pathname === "/movies") {
       if (localStorage.getItem("RequestText")) {
-      setInputSearch(localStorage.getItem("RequestText"))
+        setInputSearch(localStorage.getItem("RequestText"));
+      }
     }
-    }    
-    if (pathname === "/saved-movies") {
-      if (localStorage.getItem("requestTextSaveMovies")) {
-      setInputSearch(localStorage.getItem("requestTextSaveMovies"))
-    }
-    } 
-  }, []); 
+  }, []);
 
   function handleChangeInput(e) {
     setInputSearch(e.target.value);
@@ -26,16 +25,12 @@ const SearchForm = ({handleSearchSubmit, shortFilmStatus, handleChangeCheckbox})
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (pathname === "/movies") {
-      if (inputSearch === "") {
-        setErrorsSearch("Нужно ввести ключевое слово");
-      } else {
-        setErrorsSearch("");
-        handleSearchSubmit(inputSearch, shortFilmStatus);
-      }
+    if (inputSearch === "") {
+      setErrorsSearch("Нужно ввести ключевое слово");
     } else {
+      setErrorsSearch("");
       handleSearchSubmit(inputSearch, shortFilmStatus);
-    }      
+    }
   }
 
   return (
@@ -50,12 +45,17 @@ const SearchForm = ({handleSearchSubmit, shortFilmStatus, handleChangeCheckbox})
         ></input>
         <div className="search__error">
           <span className="search__input-error">{errorsSearch}</span>
-        </div>        
+        </div>
         <button type="submit" className="search__btn">
           Найти
         </button>
         <label className="search__checkbox-container">
-          <input type="checkbox" id="search__checkbox" checked={shortFilmStatus} onChange={handleChangeCheckbox}/>
+          <input
+            type="checkbox"
+            id="search__checkbox"
+            checked={shortFilmStatus}
+            onChange={handleChangeCheckbox}
+          />
           <span className="search__checkbox-span"></span>
           <label htmlFor="search__checkbox" className="search__label">
             Короткометражки
