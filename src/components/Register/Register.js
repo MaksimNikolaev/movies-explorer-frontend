@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import useValidationForms from '../../hooks/useValidationForms';
+import { REG_EXP_EMAIL, REG_EXP_NAME } from '../../utils/constants';
 import Form from "../Form/Form";
 import "./Register.css";
 
@@ -29,8 +30,9 @@ const Register = ({handleRegister, loggedIn}) => {
                 className={`form__input ${errors.name && "form__input_type_error"}`}
                 placeholder="Введите имя"
                 name="name"
-                minLength={2}
-                maxLength={40}
+                minLength="2"
+                maxLength="30"
+                pattern={REG_EXP_NAME}
                 onChange={handleChange}
                 required
               ></input>
@@ -46,6 +48,7 @@ const Register = ({handleRegister, loggedIn}) => {
                 className={`form__input ${errors.email && "form__input_type_error"}`}
                 placeholder="Введите почту"
                 name="email"
+                pattern={REG_EXP_EMAIL}
                 onChange={handleChange}
                 required
               ></input>
@@ -61,6 +64,7 @@ const Register = ({handleRegister, loggedIn}) => {
                 className={`form__input ${errors.password && "form__input_type_error"}`}
                 placeholder="Введите пароль"
                 name="password"
+                minLength="6"
                 onChange={handleChange}
                 required
               ></input>

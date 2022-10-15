@@ -25,4 +25,7 @@ const DEVICE_PARAMS = {
   },
 };
 
-export { BASE_URL, MOVIES_URL, SHORT_MOVIES_DURATION, DEVICE_PARAMS };
+const REG_EXP_NAME = '^[A-Za-zА-Яа-яЁё /s -]+$';
+const REG_EXP_EMAIL = '[a-z0-9._-]+@[a-z0-9.-]+\\.[a-z]{2,}$';
+
+export { BASE_URL, MOVIES_URL, SHORT_MOVIES_DURATION, DEVICE_PARAMS, REG_EXP_NAME, REG_EXP_EMAIL };

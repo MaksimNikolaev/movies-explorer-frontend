@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import useValidationForms from '../../hooks/useValidationForms';
+import { REG_EXP_EMAIL } from '../../utils/constants';
 import Form from "../Form/Form";
 import "./Login.css";
 
@@ -29,6 +30,7 @@ const Login = ({handleLogin, loggedIn}) => {
                 className={`form__input ${errors.email && "form__input_type_error"}`}
                 placeholder="Введите почту"
                 name="email"
+                pattern={REG_EXP_EMAIL}
                 onChange={handleChange}
                 required
               ></input>

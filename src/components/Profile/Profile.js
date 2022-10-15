@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useValidationForms from "../../hooks/useValidationForms";
+import { REG_EXP_EMAIL, REG_EXP_NAME } from "../../utils/constants";
 import Header from "../Header/Header";
 import "./Profile.css";
 
 const Profile = ({ handleLogOut, handleUpdateProfile, loggedIn }) => {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, isValid, setValues, setIsValid } = useValidationForms();
+  const { values, handleChange, isValid, setValues, setIsValid, errors } = useValidationForms();
   const [isEditProfile, setEditProfile] = useState(false);
+  const spanErrorClassName = `${!isValid && "profile__error"}`;
 
   useEffect(() => {
     setValues(currentUser);    
@@ -56,9 +58,13 @@ const Profile = ({ handleLogOut, handleUpdateProfile, loggedIn }) => {
                 placeholder="Введите имя"
                 onChange={handleChange}
                 value={values.name || ""}
+                minLength="2"
+                maxLength="30"
+                pattern={REG_EXP_NAME}
                 required
               ></input>
-            </div>
+              <span id="name__error" className={spanErrorClassName}>{errors.name}</span>
+            </div>                
             <div className="profile__container">
               <p htmlFor="profile__email" className="profile__subtitle">
                 E&#8209;mail
@@ -71,8 +77,10 @@ const Profile = ({ handleLogOut, handleUpdateProfile, loggedIn }) => {
                 value={values.email || ""}
                 placeholder="Введите почту"
                 onChange={handleChange}
+                pattern={REG_EXP_EMAIL}
                 required
               ></input>
+              <span id="email__error" className={spanErrorClassName}>{errors.email}</span>
             </div>
             <button
               type="submit"

@@ -5,7 +5,7 @@ import "./Form.css";
 const Form = ({ id, title, children, text, link, textLink, onSubmit }) => {
   return (
     <div className="form__container">
-      <form className={`${id}__form form`} id={id} onSubmit={onSubmit}>
+      <form className={`${id}__form form`} id={id} onSubmit={onSubmit} noValidate>
         <Logo />
         <h1 className="form__title">{title}</h1>
         {children}
