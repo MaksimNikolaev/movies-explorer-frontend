@@ -20,9 +20,7 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("jwt"));
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [moviesSaveArray, setMoviesSaveArray] = useState([]);
-  const [savedMoviesAfterFilter, setSavedMoviesAfterFilter] = useState(
-    JSON.parse(localStorage.getItem("saveMovies"))
-  );
+  const [savedMoviesAfterFilter, setSavedMoviesAfterFilter] = useState(JSON.parse(localStorage.getItem("saveMovies")));
   const [dataReceived, setDataReceived] = useState(false);
   const { pathname } = useLocation();
 
@@ -45,7 +43,7 @@ const App = () => {
 
   useEffect(() => {
     getSaveMovies();
-  }, [dataReceived]);
+  }, [dataReceived, loggedIn]);
 
   useEffect(() => {
     if (pathname === "/saved-movies") {
@@ -64,6 +62,7 @@ const App = () => {
       .getSaveMovies(localStorage.getItem("jwt"))
       .then((res) => {
         setMoviesSaveArray(res);
+        setSavedMoviesAfterFilter(res)
         setDataReceived(true);
       })
       .catch((err) => {

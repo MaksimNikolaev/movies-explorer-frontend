@@ -30,6 +30,7 @@ const SavedMovies = ({
           shortFilmStatus
         );       
           setSavedMoviesAfterFilter(filterData);
+          localStorage.setItem("saveMovies", JSON.stringify(savedMovies));
           setDataReceived(true);        
       })
       .catch((err) => {
