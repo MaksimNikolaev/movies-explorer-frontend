@@ -101,6 +101,8 @@ const App = () => {
   const handleLogOut = () => {
     localStorage.clear();
     setLoggedIn(false);
+    setMoviesSaveArray([]);
+    setSavedMoviesAfterFilter([]);
     navigate("/");
   };
 
