@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
@@ -20,9 +20,24 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("jwt"));
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [moviesSaveArray, setMoviesSaveArray] = useState([]);
-  const [savedMoviesAfterFilter, setSavedMoviesAfterFilter] = useState(JSON.parse(localStorage.getItem("saveMovies")));
+  const [savedMoviesAfterFilter, setSavedMoviesAfterFilter] = useState(
+    JSON.parse(localStorage.getItem("saveMovies"))
+  );
   const [dataReceived, setDataReceived] = useState(false);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.addEventListener("storage", handleCheckTokenOnLoaclStorage);
+    return () => {
+      window.removeEventListener("storage", handleCheckTokenOnLoaclStorage);
+    };
+  });
+
+  const handleCheckTokenOnLoaclStorage = (e) => {
+    if (e.key === "jwt") {
+      handleLogOut();
+    }
+  };
 
   useEffect(() => {
     checkToken();
@@ -34,16 +49,15 @@ const App = () => {
 
   useEffect(() => {
     if (pathname === "/saved-movies") {
-      setSavedMoviesAfterFilter(moviesSaveArray)
+      setSavedMoviesAfterFilter(moviesSaveArray);
     }
-    
   }, [pathname]);
 
   const handleTokenEdit = (err) => {
     if (err === "Ошибка: 401") {
       handleLogOut();
     }
-  }
+  };
 
   const getSaveMovies = () => {
     mainApi
@@ -68,8 +82,7 @@ const App = () => {
         if (err === "Ошибка: 409") {
           setInfoTooltipOpen(true);
           setMessage("Пользователь с таким email уже существует.");
-        } 
-        else {
+        } else {
           setInfoTooltipOpen(true);
           setMessage("При регистрации пользователя произошла ошибка.");
         }
@@ -172,20 +185,29 @@ const App = () => {
       .removeMovies(movie, localStorage.getItem("jwt"))
       .then(() => {
         if (savedMoviesAfterFilter === null) {
-          setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
+          setMoviesSaveArray(
+            moviesSaveArray.filter((i) => i._id !== movie._id)
+          );
           //localStorage.setItem("saveMovies", JSON.stringify(savedMoviesAfterFilter.filter((i) => i._id !== movie._id)))
           setDataReceived(true);
         } else {
           setSavedMoviesAfterFilter(
             savedMoviesAfterFilter.filter((i) => i._id !== movie._id)
           );
-          setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
-          localStorage.setItem("saveMovies", JSON.stringify(savedMoviesAfterFilter.filter((i) => i._id !== movie._id)))
+          setMoviesSaveArray(
+            moviesSaveArray.filter((i) => i._id !== movie._id)
+          );
+          localStorage.setItem(
+            "saveMovies",
+            JSON.stringify(
+              savedMoviesAfterFilter.filter((i) => i._id !== movie._id)
+            )
+          );
           setDataReceived(true);
-        }        
+        }
       })
       .catch((err) => {
-        handleTokenEdit(err)
+        handleTokenEdit(err);
       });
   };
 
