@@ -6,10 +6,12 @@ import Header from "../Header/Header";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 
+
 const SavedMovies = ({
   loggedIn,
   moviesSaveArray,
-  setMoviesSaveArray,
+  savedMoviesAfterFilter,
+  setSavedMoviesAfterFilter,
   dataReceived,
   setDataReceived,
   handleDeleteMovies,
@@ -27,7 +29,7 @@ const SavedMovies = ({
           inputSearch,
           shortFilmStatus
         );       
-          setMoviesSaveArray(filterData);
+          setSavedMoviesAfterFilter(filterData);
           setDataReceived(true);        
       })
       .catch((err) => {
@@ -52,7 +54,7 @@ const SavedMovies = ({
           handleChangeCheckbox={handleChangeCheckbox}
         />
         <MoviesCardList
-          moviesArray={moviesSaveArray}
+          moviesArray={savedMoviesAfterFilter === null ? moviesSaveArray : savedMoviesAfterFilter.length === 0 ? [] : savedMoviesAfterFilter}
           moviesSaveArray={moviesSaveArray}
           dataReceived={dataReceived}
           handleDeleteMovies={handleDeleteMovies}

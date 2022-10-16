@@ -20,6 +20,7 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("jwt"));
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [moviesSaveArray, setMoviesSaveArray] = useState([]);
+  const [savedMoviesAfterFilter, setSavedMoviesAfterFilter] = useState(JSON.parse(localStorage.getItem("saveMovies")));
   const [dataReceived, setDataReceived] = useState(false);
   const { pathname } = useLocation();
 
@@ -33,7 +34,7 @@ const App = () => {
 
   useEffect(() => {
     if (pathname === "/saved-movies") {
-      getSaveMovies();
+      setSavedMoviesAfterFilter(moviesSaveArray)
     }
     
   }, [pathname]);
@@ -168,8 +169,18 @@ const App = () => {
     mainApi
       .removeMovies(movie, localStorage.getItem("jwt"))
       .then(() => {
+        if (savedMoviesAfterFilter === null) {
           setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
+          //localStorage.setItem("saveMovies", JSON.stringify(savedMoviesAfterFilter.filter((i) => i._id !== movie._id)))
           setDataReceived(true);
+        } else {
+          setSavedMoviesAfterFilter(
+            savedMoviesAfterFilter.filter((i) => i._id !== movie._id)
+          );
+          setMoviesSaveArray(moviesSaveArray.filter((i) => i._id !== movie._id));
+          localStorage.setItem("saveMovies", JSON.stringify(savedMoviesAfterFilter.filter((i) => i._id !== movie._id)))
+          setDataReceived(true);
+        }        
       })
       .catch((err) => {
         handleTokenEdit(err)
@@ -200,7 +211,8 @@ const App = () => {
                 <SavedMovies
                   loggedIn={loggedIn}
                   moviesSaveArray={moviesSaveArray}
-                  setMoviesSaveArray={setMoviesSaveArray}
+                  savedMoviesAfterFilter={savedMoviesAfterFilter}
+                  setSavedMoviesAfterFilter={setSavedMoviesAfterFilter}
                   dataReceived={dataReceived}
                   setDataReceived={setDataReceived}
                   handleDeleteMovies={handleDeleteMovies}
