@@ -3,114 +3,151 @@ import Header from "../Header/Header";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
-import photo1 from "../../images/MoviesCard/33slova.jpg";
-import photo2 from "../../images/MoviesCard/100let.jpg";
-import photo3 from "../../images/MoviesCard/vpogone.jpg";
-import photo4 from "../../images/MoviesCard/baskiya.jpg";
-import photo5 from "../../images/MoviesCard/beg.jpg";
-import photo6 from "../../images/MoviesCard/knigotvorci.jpg";
-import photo7 from "../../images/MoviesCard/kogdayadumau.jpg";
-import photo8 from "../../images/MoviesCard/gimme.jpg";
-import photo9 from "../../images/MoviesCard/jenis.jpg";
-import photo10 from "../../images/MoviesCard/soberis.jpg";
-import photo11 from "../../images/MoviesCard/pi.jpg";
-import photo12 from "../../images/MoviesCard/po_volnam.jpg";
 import MoreButton from "../MoreButton/MoreButton";
+import { DEVICE_PARAMS } from "../../utils/constants.js";
+import moviesApi from "../../utils/MoviesApi";
+import { useEffect, useState } from "react";
+import filterMovies from "../../utils/filter";
 
-const Movies = () => {
-  const moviesArray = [
-    {
-      id: 1,
-      name: "33 слова о дизайне",
-      duration: "1ч 17м",
-      photo: photo1,
-      isSaved: false,
-    },
-    {
-      id: 2,
-      name: "Киноальманах «100 лет дизайна»",
-      duration: "1ч 17м",
-      photo: photo2,
-      isSaved: true,
-    },
-    {
-      id: 3,
-      name: "В погоне за Бенкси",
-      duration: "1ч 17м",
-      photo: photo3,
-      isSaved: true,
-    },
-    {
-      id: 4,
-      name: "Баския: Взрыв реальности",
-      duration: "1ч 17м",
-      photo: photo4,
-      isSaved: false,
-    },
-    {
-      id: 5,
-      name: "Бег это свобода",
-      duration: "1ч 17м",
-      photo: photo5,
-      isSaved: false,
-    },
-    {
-      id: 6,
-      name: "Книготорговцы",
-      duration: "1ч 17м",
-      photo: photo6,
-      isSaved: true,
-    },
-    {
-      id: 7,
-      name: "Когда я думаю о Германии ночью",
-      duration: "1ч 17м",
-      photo: photo7,
-      isSaved: false,
-    },
-    {
-      id: 8,
-      name: "Gimme Danger: История Игги и The Stooges",
-      duration: "1ч 17м",
-      photo: photo8,
-      isSaved: false,
-    },
-    {
-      id: 9,
-      name: "Дженис: Маленькая девочка грустит",
-      duration: "1ч 17м",
-      photo: photo9,
-      isSaved: false,
-    },
-    {
-      id: 10,
-      name: "Соберись перед прыжком",
-      duration: "1ч 17м",
-      photo: photo10,
-      isSaved: false,
-    },
-    {
-      id: 11,
-      name: "Пи Джей Харви: A dog called money",
-      duration: "1ч 17м",
-      photo: photo11,
-      isSaved: false,
-    },
-    {
-      id: 12,
-      name: "По волнам: Искусство звука в кино",
-      duration: "1ч 17м",
-      photo: photo12,
-      isSaved: false,
-    },
-  ];
+const Movies = ({
+  loggedIn,
+  handleSavesMovies,
+  moviesSaveArray,
+  handleDeleteMovies,
+}) => {
+  const [moviesArray, setMoviesArray] = useState([]);
+  const [saveMoviesServer, setSaveMoviesServer] = useState(
+    JSON.parse(localStorage.getItem("moviesServer"))
+  );
+  const [moviesDisplay, setMoviesDisplay] = useState({});
+  const [countMoviesOfScreens, setCountMoviesOfScreens] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [shortFilmStatus, setShortFilmStatus] = useState(false);
+  const [dataReceived, setDataReceived] = useState(false);
+  const { desktop, tablet, mobile } = DEVICE_PARAMS;
+
+  useEffect(() => {
+    if (localStorage.getItem("movies")) {
+      const movies = JSON.parse(localStorage.getItem("movies"));
+      setMoviesArray(movies);
+      setDataReceived(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("moviesServer")) {
+      const movies = JSON.parse(localStorage.getItem("moviesServer"));
+      setSaveMoviesServer(movies);
+      setDataReceived(true);
+    }
+  }, [dataReceived]);
+
+  useEffect(() => {
+    if (localStorage.getItem("shortFilmStatus") === "true") {
+      setShortFilmStatus(true);
+    } else {
+      setShortFilmStatus(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    let timer;
+    const handleChangeWidthScreenTimer = () => {
+      timer = setTimeout(handleChangeWidthScreen, 1000);
+    };
+    window.addEventListener("resize", handleChangeWidthScreenTimer);
+    return () => {
+      window.removeEventListener("resize", handleChangeWidthScreenTimer);
+      clearTimeout(timer);
+    };
+  });
+
+  useEffect(() => {
+    handleChangeWidthScreen();
+  }, []);
+
+  const handleChangeWidthScreen = () => {
+    if (window.innerWidth < mobile.width) {
+      setMoviesDisplay(mobile.movies);
+      setCountMoviesOfScreens(mobile.movies.initilalQuantity);
+    } else if (window.innerWidth < tablet.width) {
+      setMoviesDisplay(tablet.movies);
+      setCountMoviesOfScreens(tablet.movies.initilalQuantity);
+    } else {
+      setMoviesDisplay(desktop.movies);
+      setCountMoviesOfScreens(desktop.movies.initilalQuantity);
+    }
+  };
+
+  const handleSearchSubmit = (inputSearch, shortFilmStatus) => {
+    setIsLoading(true);
+    if (saveMoviesServer !== null) {
+      const filterData = filterMovies(
+        saveMoviesServer,
+        inputSearch,
+        shortFilmStatus
+      );
+      localStorage.setItem("movies", JSON.stringify(filterData));
+      localStorage.setItem("RequestText", inputSearch);
+      localStorage.setItem("shortFilmStatus", shortFilmStatus);
+      setMoviesArray(filterData);
+      setShortFilmStatus(shortFilmStatus);
+      setDataReceived(true);
+      setIsLoading(false);
+    } else {
+      moviesApi
+        .getMovies()
+        .then((res) => {
+          handleChangeWidthScreen();
+          const filterData = filterMovies(res, inputSearch, shortFilmStatus);
+          localStorage.setItem("moviesServer", JSON.stringify(res));
+          localStorage.setItem("movies", JSON.stringify(filterData));
+          localStorage.setItem("RequestText", inputSearch);
+          localStorage.setItem("shortFilmStatus", shortFilmStatus);
+          setMoviesArray(filterData);
+          setShortFilmStatus(shortFilmStatus);
+          setDataReceived(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
+  const loadMore = () => {
+    setCountMoviesOfScreens(countMoviesOfScreens + moviesDisplay.inc);
+  };
+
+  const handleChangeCheckbox = () => {
+    shortFilmStatus ? setShortFilmStatus(false) : setShortFilmStatus(true);
+  };
+
   return (
     <>
-      <Header isBlue={false} isLoggedIn={true} />
+      <Header isBlue={false} loggedIn={loggedIn} textColorBlack={true} />
       <main className="main">
-        <SearchForm />
-        <MoviesCardList moviesArray={moviesArray} />
-        <MoreButton moviesArray={moviesArray} />
+        <SearchForm
+          handleSearchSubmit={handleSearchSubmit}
+          shortFilmStatus={shortFilmStatus}
+          handleChangeCheckbox={handleChangeCheckbox}
+        />
+        <MoviesCardList
+          moviesArray={moviesArray}
+          countMoviesOfScreens={countMoviesOfScreens}
+          isLoading={isLoading}
+          handleSavesMovies={handleSavesMovies}
+          handleDeleteMovies={handleDeleteMovies}
+          dataReceived={dataReceived}
+          moviesSaveArray={moviesSaveArray}
+        />
+        <MoreButton
+          moviesArray={moviesArray}
+          handleMoreSubmit={loadMore}
+          countMoviesOfScreens={countMoviesOfScreens}
+        />
       </main>
       <Footer />
     </>
