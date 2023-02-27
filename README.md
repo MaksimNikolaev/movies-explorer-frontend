@@ -77,8 +77,8 @@
 ---
 ## *Ссылки:*
   
-[**Фронтенд**](https://nmovies-films.students.nomoredomainssbs.ru/)
+[**Фронтенд**](https://nmovies-project.students.nomoredomainssbs.ru/)
 
-[**Бэкенд**](https://api.nmovies-films.students.nomoredomainssbs.ru/)
+[**Бэкенд**](https://api.nmovies-project.students.nomoredomainssbs.ru/)
 
 [**Макет**](https://www.figma.com/file/gJmUO6p3Fa42x3SA0Y7qne/DiplomNikolaev?node-id=891%3A3857)
